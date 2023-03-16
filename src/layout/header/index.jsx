@@ -323,7 +323,7 @@ function Headre() {
             </Transition>
           </Popover>
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 outline-none">
               مردانه
               <ChevronDownIcon
                 className="h-5 w-5 flex-none text-gray-400"
@@ -385,7 +385,7 @@ function Headre() {
             </Transition>
           </Popover>
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 outline-none">
               نوجوان
               <ChevronDownIcon
                 className="h-5 w-5 flex-none text-gray-400"
@@ -447,7 +447,7 @@ function Headre() {
             </Transition>
           </Popover>
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 outline-none">
               بچگانه
               <ChevronDownIcon
                 className="h-5 w-5 flex-none text-gray-400"
@@ -509,7 +509,7 @@ function Headre() {
             </Transition>
           </Popover>
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 outline-none">
               اسپرت
               <ChevronDownIcon
                 className="h-5 w-5 flex-none text-gray-400"
@@ -571,7 +571,7 @@ function Headre() {
             </Transition>
           </Popover>
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 outline-none">
               برندها
               <ChevronDownIcon
                 className="h-5 w-5 flex-none text-gray-400"
@@ -633,7 +633,7 @@ function Headre() {
             </Transition>
           </Popover>
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 outline-none">
               محصولات Mifa
               <ChevronDownIcon
                 className="h-5 w-5 flex-none text-gray-400"
