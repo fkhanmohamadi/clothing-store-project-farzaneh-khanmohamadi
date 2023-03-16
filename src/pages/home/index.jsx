@@ -1,10 +1,12 @@
 import React from 'react'
+import ImageField from '../../components/img'
 import Headre from '../../layout/header'
 
 function HomeScreen() {
   return (
     <div>
-      <Headre></Headre>
+      <Headre/>
+      <ImageField className="w-screen object-cover my-2" src="./baner.jpg" alt="baner"/>
     </div>
   )
 }
