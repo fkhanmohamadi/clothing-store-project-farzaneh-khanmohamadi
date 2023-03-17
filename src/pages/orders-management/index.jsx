@@ -1,4 +1,5 @@
 import React from "react";
+import { fetchProductService } from "../../api/services/Products";
 import Table from "../../components/table";
 import HeaderManagment from "../../layout/header-managment";
 import Statistics from "../../layout/Statistics";
