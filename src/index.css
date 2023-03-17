@@ -10,10 +10,10 @@
 
 @font-face {
   font-family: yekan;
-  src: url('./asset/fonts/yekan-font/yekan-regular.eot');
-  src: url('./asset/fonts/yekan-font/Yekan.eot?#iefix') format('yekan-opentype'),
-       url('./asset/fonts/yekan-font/yekan-regular.woff') format('woff'),
-       url('./asset/fonts/yekan-font/yekan-regular.ttf') format('truetype');
+  src: url('../dist/assets/fonts/yekan-font/yekan-regular.eot');
+  src: url('../dist/assets/fonts/yekan-font/Yekan.eot?#iefix') format('yekan-opentype'),
+       url('../dist/assets/fonts/yekan-font/yekan-regular.woff') format('woff'),
+       url('../dist/assets/fonts/yekan-font/yekan-regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
