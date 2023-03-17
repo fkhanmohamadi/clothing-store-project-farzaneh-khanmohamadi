@@ -3,6 +3,9 @@ import React from "react";
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import TextField from "../../components/text-field";
 import ImageField from "../../components/img";
+import CheckboxField from "../../components/checkBox-field";
+import LinkFiled from "../../components/link";
+import Button from "../../components/button";
 
 function Login() {
   return (
@@ -24,8 +27,6 @@ function Login() {
             action="#"
             method="POST"
           >
-            <input type="hidden" name="remember" defaultValue="true" />
-
             <TextField
               id="email-address"
               lable="نام کاربری"
@@ -48,33 +49,18 @@ function Login() {
             />
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                  مرا به خاطر بسپار
-                </label>
-              </div>
+              <CheckboxField id="remember-me" lable="مرا به خاطر بسپار" />
 
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  رمز عبور خود را فراموش کرده ام؟
-                </a>
-              </div>
+              <LinkFiled
+                href="#"
+                className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                رمز عبور خود را فراموش کرده ام؟
+              </LinkFiled>
             </div>
 
             <div>
-              <button
+              <Button
                 type="submit"
                 className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
@@ -85,7 +71,7 @@ function Login() {
                   />
                 </span>
                 ورود
-              </button>
+              </Button>
             </div>
           </form>
         </div>

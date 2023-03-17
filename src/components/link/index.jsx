@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
 
-function LinkFiled() {
+function LinkFiled({href, className, children}) {
   return (
     <div>
-      
+      <a href={href} className={className}>
+        {children}
+      </a>
     </div>
-  )
+  );
 }
 
-export default LinkFiled
+export default LinkFiled;
