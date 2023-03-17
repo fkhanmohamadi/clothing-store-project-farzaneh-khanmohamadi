@@ -12,12 +12,14 @@ function Login() {
     <>
       <div className="flex min-h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-100">
         <div className="w-full max-w-md space-y-10 bg-white p-6 rounded-lg shadow-md">
-          <div>
-            <ImageField
-              className="mx-auto h-12 w-auto"
-              src="./logo.gif"
-              alt="logo"
-            />
+          <div className="flex flex-col items-center">
+            <div className="w-24 h-24 flex items-center border border-gray-200 p-2 rounded-full shadow-lg">
+              <ImageField
+                className="mx-auto h-12 w-auto"
+                src="./logo.gif"
+                alt="logo"
+              />
+            </div>
             <h2 className="mt-6 text-center text-2xl font-bold tracking-tight text-gray-900">
               ورود به پنل مدیریت
             </h2>
@@ -34,7 +36,7 @@ function Login() {
               type="email"
               autoComplete="email"
               required
-              className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               placeholder=""
             />
             <TextField
@@ -44,7 +46,7 @@ function Login() {
               type="password"
               autoComplete="current-password"
               required
-              className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               placeholder=""
             />
 
