@@ -1,11 +1,22 @@
-import React from 'react'
+import React from "react";
 
-function TextField() {
+function TextField({id,lable,name,type,autoComplete,required,className,placeholder}) {
   return (
-    <div>
-      
+    <div className="flex flex-col space-y-3"> 
+      <label htmlFor={id}>
+                {lable}
+      </label>
+      <input
+        id = {id}
+        name = {name}
+        type = {type}
+        autoComplete ={autoComplete}
+        required 
+        className = {className}
+        placeholder ={placeholder}
+      />
     </div>
-  )
+  );
 }
 
-export default TextField
+export default TextField;

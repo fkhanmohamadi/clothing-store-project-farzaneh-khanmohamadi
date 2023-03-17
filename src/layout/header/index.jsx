@@ -14,6 +14,7 @@ import {
 import {
   ChevronDownIcon,
 } from "@heroicons/react/20/solid";
+import { Link } from "react-router-dom";
 
 const feminine = [
   {
@@ -208,8 +209,8 @@ function Headre() {
       </div>
       <div className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
         <div className="hidden lg:flex lg:flex-1 lg:justify-start gap-5">
-          <a
-            href="#"
+          <Link
+            to = "/login"
             className="flex items-center text-sm font-semibold leading-6 text-gray-900"
           >
             <span aria-hidden="true">
@@ -217,7 +218,7 @@ function Headre() {
               <ArrowRightOnRectangleIcon className="h-5 w-5 text-black-500" />{" "}
             </span>
             <span>ورود</span>
-          </a>
+          </Link>
           <a
             href="#"
             className="flex items-center text-sm font-semibold leading-6 text-gray-900"
