@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
-function ListField() {
+function ListField({id, className, children}) {
   return (
-    <div>
-      
-    </div>
-  )
+      <li id={id} className={className}>
+        {children}
+      </li>
+  );
 }
 
-export default ListField
+export default ListField;
