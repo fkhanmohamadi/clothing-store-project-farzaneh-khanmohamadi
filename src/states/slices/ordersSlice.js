@@ -1,10 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchOrderService } from "../../api/services/orders";
 
-export const fetchOrders = createAsyncThunk('orders/fetchList',async ()=>{
- const res = await fetchOrderService();
- return res.data
-})
+export const fetchOrders = createAsyncThunk('orders/fetchList', 
+ fetchOrderService
+)
 
 
 const ordersSlice = createSlice({
