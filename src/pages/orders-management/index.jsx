@@ -15,15 +15,23 @@ function OrderManagment() {
   const dispatch = useDispatch();
 
   const [active, setActive] = useState("1");
-  const [searchParams, setSearchParams] = useSearchParams({
+
+  const [paginationParams, setPaginationParams] = useSearchParams({
     _page: 1,
     _limit: 5,
-  });
+    delivered: false,
+    });
 
+  const [searchParams, setSearchParams] = useState("");
 
   useEffect(() => {
-    dispatch(fetchOrders(searchParams));
+    dispatch(fetchOrders(paginationParams));
   }, []);
+
+  const searchHandler = (e) => {
+    setSearchParams(e.target.value);
+    console.log(searchParams)
+  };
 
   return (
     <div className="flex">
@@ -34,15 +42,26 @@ function OrderManagment() {
           <SearchField
             className="p-1 w-96 text-sm bg-transparent outline-0"
             placeholder="جستجو ..."
+            // searchParams={searchParams}
+            // setSearchParams = {setSearchParams}
+            onchange={searchHandler}
           />
           <RadioField />
         </div>
-        {orders.status === "success" ? (<OrdersTable tbodyData={orders.data.ordersData} />) : ("")}
+        {orders.status === "success" ? (
+          <OrdersTable
+            tbodyData={orders.data.ordersData}
+            searchParams={searchParams}
+          />
+        ) : (
+          ""
+        )}
         <Pagination
-                params={searchParams}
-                count={ordersCount}
-                active={active}
-                setActive={setActive}/>
+          params={paginationParams}
+          count={ordersCount}
+          active={active}
+          setActive={setActive}
+        />
       </div>
     </div>
   );
