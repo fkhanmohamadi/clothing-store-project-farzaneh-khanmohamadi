@@ -4,7 +4,6 @@ import { instance } from "../../constants";
 
 export const fetchOrderService = async (params) => {
   let count;
-  console.log(params)
   try {
     const response = await instance.get(
       `/orders?${params}`

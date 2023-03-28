@@ -1,6 +1,6 @@
 import React from "react";
 
-function OrdersTable({tbodyData}) {
+function ProductsTable({tbodyData}) {
   return (
     <div>
       <div className="flex flex-col">
@@ -20,25 +20,18 @@ function OrdersTable({tbodyData}) {
                                         scope="col"
                                         className="px-6 py-3 text-xs text-right font-bold text-left text-gray-500 uppercase "
                                     >
-                                        نام کاربر
+                                        نام کالا
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-xs text-right font-bold text-left text-gray-500 uppercase "
                                     >
-                                        مجموع مبلغ
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        className="px-6 py-3 text-xs text-right font-bold text-left text-gray-500 uppercase "
-                                    >
-                                        زمان ثبت سفارش
+                                         دسته بندی
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
                                     >
-                                        بررسی سفارش
                                     </th>
                                 </tr>
                 </thead>
@@ -50,20 +43,23 @@ function OrdersTable({tbodyData}) {
                                         {row.id}
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                                    {row.firstname + ' '+ row.lastname}
+                                    {row.name}
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                                    {row.totalPrice}
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                                    {new Intl.DateTimeFormat('fa-IR').format(row.createdAt)}
-                                    </td>                               
-                                    <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                                    {row.name}
+                                    </td>                             
+                                    <td className="flex justify-between px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                         <a
                                             className="text-cyan-400 hover:text-cyan-700"
                                             href="#"
                                         >
-                                            ویرایش سفارش
+                                            ویرایش
+                                        </a>
+                                        <a
+                                            className="text-pink-600 hover:text-pink-800"
+                                            href="#"
+                                        >
+                                            حذف
                                         </a>
                                     </td>
                       </tr>
@@ -79,4 +75,4 @@ function OrdersTable({tbodyData}) {
   );
 }
 
-export default OrdersTable;
+export default ProductsTable;
