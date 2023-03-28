@@ -1,6 +1,6 @@
 import React from "react";
 
-function ProductsTable({tbodyData}) {
+function ProductsTable({tbodyData, categoryData}) {
   return (
     <div>
       <div className="flex flex-col">
@@ -46,7 +46,7 @@ function ProductsTable({tbodyData}) {
                                     {row.name}
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                                    {row.name}
+                                    {categoryData.find(item=>item.id === row.category).name}
                                     </td>                             
                                     <td className="flex justify-between px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                         <a

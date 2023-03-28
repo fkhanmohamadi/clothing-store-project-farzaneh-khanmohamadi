@@ -8,11 +8,14 @@ import HeaderManagment from "../../layout/header-managment";
 import Statistics from "../../layout/Statistics";
 import { fetchproducts } from "../../states/slices/productsSlice";
 import ProductsTable from "../../components/products-table";
+import { fetchCategory } from "../../states/slices/categorySlice";
 
 function ProductManagment() {
   const products = useSelector((store) => store.products);
   const productsCount = useSelector((store) => store.products.data.count);
   const dispatch = useDispatch();
+
+  const category = useSelector((store)=>store.category)
 
   const [active, setActive] = useState("1");
 
@@ -26,6 +29,11 @@ function ProductManagment() {
   useEffect(() => {
     dispatch(fetchproducts(paginationParams));
   }, []);
+
+  useEffect(() => {
+    dispatch(fetchCategory());
+  }, []);
+
 
   const searchHandler = (e) => {
     setSearchParams(e.target.value);
@@ -54,6 +62,8 @@ function ProductManagment() {
         {products.status === "success" ? (
           <ProductsTable
             tbodyData={products.data.productsData}
+            categoryData={category.data.categoryData}
+            
             // searchParams={searchParams}
           />
         ) : (
