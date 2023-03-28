@@ -1,6 +1,6 @@
 import React from "react";
 
-function OrdersTable({tbodyData}) {
+function ProductsTable({tbodyData, categoryData, subcategoryData}) {
   return (
     <div>
       <div className="flex flex-col">
@@ -20,25 +20,24 @@ function OrdersTable({tbodyData}) {
                                         scope="col"
                                         className="px-6 py-3 text-xs text-right font-bold text-left text-gray-500 uppercase "
                                     >
-                                        نام کاربر
+                                        تصویر
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-xs text-right font-bold text-left text-gray-500 uppercase "
                                     >
-                                        مجموع مبلغ
+                                        نام کالا
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-xs text-right font-bold text-left text-gray-500 uppercase "
                                     >
-                                        زمان ثبت سفارش
+                                         دسته بندی
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
                                     >
-                                        بررسی سفارش
                                     </th>
                                 </tr>
                 </thead>
@@ -49,21 +48,29 @@ function OrdersTable({tbodyData}) {
                         <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
                                         {row.id}
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                                    {row.firstname + ' '+ row.lastname}
+                                    <td className="px-3 py-2 h-30 whitespace-nowrap">
+                                    <img src={row.thumbnail} alt="" className="h-11 w-11" />
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                                    {row.totalPrice}
+                                    {row.name}
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                                    {new Intl.DateTimeFormat('fa-IR').format(row.createdAt)}
-                                    </td>                               
-                                    <td className="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                                    {categoryData.find(item=>item.id === row.category).name}
+                                    &nbsp; / &nbsp;
+                                    {subcategoryData.find(item=>item.id === row.subcategory).name}
+                                    </td>                             
+                                    <td className="flex justify-between px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                         <a
                                             className="text-cyan-400 hover:text-cyan-700"
                                             href="#"
                                         >
-                                            ویرایش سفارش
+                                            ویرایش
+                                        </a>
+                                        <a
+                                            className="text-pink-600 hover:text-pink-800"
+                                            href="#"
+                                        >
+                                            حذف
                                         </a>
                                     </td>
                       </tr>
@@ -79,4 +86,4 @@ function OrdersTable({tbodyData}) {
   );
 }
 
-export default OrdersTable;
+export default ProductsTable;
