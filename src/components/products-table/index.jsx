@@ -1,6 +1,6 @@
 import React from "react";
 
-function ProductsTable({tbodyData, categoryData}) {
+function ProductsTable({tbodyData, categoryData, subcategoryData}) {
   return (
     <div>
       <div className="flex flex-col">
@@ -15,6 +15,12 @@ function ProductsTable({tbodyData, categoryData}) {
                                         className="px-6 py-3 text-xs text-right font-bold text-left text-gray-500 uppercase "
                                     >
                                         ردیف
+                                    </th>
+                                    <th
+                                        scope="col"
+                                        className="px-6 py-3 text-xs text-right font-bold text-left text-gray-500 uppercase "
+                                    >
+                                        تصویر
                                     </th>
                                     <th
                                         scope="col"
@@ -42,11 +48,16 @@ function ProductsTable({tbodyData, categoryData}) {
                         <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
                                         {row.id}
                                     </td>
+                                    <td className="px-3 py-2 h-30 whitespace-nowrap">
+                                    <img src={row.thumbnail} alt="" className="h-11 w-11" />
+                                    </td>
                                     <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                                     {row.name}
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                                     {categoryData.find(item=>item.id === row.category).name}
+                                    &nbsp; / &nbsp;
+                                    {subcategoryData.find(item=>item.id === row.subcategory).name}
                                     </td>                             
                                     <td className="flex justify-between px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                         <a

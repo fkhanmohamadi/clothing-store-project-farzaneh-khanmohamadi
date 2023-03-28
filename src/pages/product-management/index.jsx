@@ -9,6 +9,7 @@ import Statistics from "../../layout/Statistics";
 import { fetchproducts } from "../../states/slices/productsSlice";
 import ProductsTable from "../../components/products-table";
 import { fetchCategory } from "../../states/slices/categorySlice";
+import { fetchSubcategory } from "../../states/slices/subcategorySlice";
 
 function ProductManagment() {
   const products = useSelector((store) => store.products);
@@ -16,6 +17,8 @@ function ProductManagment() {
   const dispatch = useDispatch();
 
   const category = useSelector((store)=>store.category)
+
+  const subcategory = useSelector((store)=>store.subcategory)
 
   const [active, setActive] = useState("1");
 
@@ -34,10 +37,16 @@ function ProductManagment() {
     dispatch(fetchCategory());
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchSubcategory());
+  }, []);
+
 
   const searchHandler = (e) => {
     setSearchParams(e.target.value);
   };
+
+  console.log(subcategory.data.subcategoryData)
 
   return (
     <div className="flex">
@@ -63,7 +72,7 @@ function ProductManagment() {
           <ProductsTable
             tbodyData={products.data.productsData}
             categoryData={category.data.categoryData}
-            
+            subcategoryData={subcategory.data.subcategoryData}
             // searchParams={searchParams}
           />
         ) : (
