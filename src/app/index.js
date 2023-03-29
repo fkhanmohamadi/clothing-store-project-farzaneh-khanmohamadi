@@ -7,7 +7,7 @@ import Login from "../pages/login";
 import ProductManagment from "../pages/product-management";
 import QuantityManagment from "../pages/quantity-management";
 import "./index.css";
-const OrderManagment = lazy(()=>import("../pages/orders-management"))
+const OrdersManagment = lazy(()=>import("../pages/orders-management"))
 
 function App() {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     if (pathname == "/login" && Cookies.get("token")) {
-      navigate("/ordermanagment");
+      navigate("/ordersmanagment");
     }
     if (pathname == "/productmanagment" && !Cookies.get("token")) {
       navigate("/login");
@@ -23,7 +23,7 @@ function App() {
     if (pathname == "/quantitymanagement" && !Cookies.get("token")) {
       navigate("/login");
     }
-    if (pathname == "/ordermanagment" && !Cookies.get("token")) {
+    if (pathname == "/ordersmanagment" && !Cookies.get("token")) {
       navigate("/login");
     }
   }, [pathname]);
@@ -33,9 +33,9 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeScreen />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/ordermanagment" element={
+        <Route path="/ordersmanagment" element={
           <Suspense fallback={<h1>Loading...</h1>}>
-            <OrderManagment />
+            <OrdersManagment />
           </Suspense>
         } />
         <Route path="/productmanagment" element={<ProductManagment />} />

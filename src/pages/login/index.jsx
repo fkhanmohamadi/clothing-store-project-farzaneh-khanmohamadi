@@ -25,7 +25,7 @@ function Login() {
     try{
       const result = await loginService(loginData)
        Cookies.set("token",result.accessToken)
-       navigate('/ordermanagment')
+       navigate('/ordersmanagment')
     }catch(error){
       console.log(error)
     }

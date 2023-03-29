@@ -36,7 +36,7 @@ const handlelogout =()=>{
           </div>
           <div className="flex-1">
             <ul className="flex flex-col gap-5 py-4 text-sm border-b border-gray-200">
-              <HeaderManagmentList href="/ordermanagment" title="مدیریت سفارش ها">
+              <HeaderManagmentList href="/ordersmanagment" title="مدیریت سفارش ها">
                 <TruckIcon className="h-5 w-5 text-pink-600" />
               </HeaderManagmentList>
               <HeaderManagmentList href="/productmanagment" title="مدیریت کالا ها">

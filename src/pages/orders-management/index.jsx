@@ -9,7 +9,7 @@ import HeaderManagment from "../../layout/header-managment";
 import Statistics from "../../layout/Statistics";
 import { fetchOrders } from "../../states/slices/ordersSlice";
 
-function OrderManagment() {
+function OrdersManagment() {
   const orders = useSelector((store) => store.orders);
   const ordersCount = useSelector((store) => store.orders.data.count);
   const dispatch = useDispatch();
@@ -67,4 +67,4 @@ function OrderManagment() {
   );
 }
 
-export default OrderManagment;
+export default OrdersManagment;
