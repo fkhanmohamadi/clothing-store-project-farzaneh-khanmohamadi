@@ -6,8 +6,46 @@ import ImageField from "../../components/img";
 import CheckboxField from "../../components/checkBox-field";
 import LinkFiled from "../../components/link";
 import Button from "../../components/button";
+import { useState } from "react";
+import { loginService } from "../../api/services/auth";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+
+  const navigate = useNavigate();
+
+  const [loginData, setLoginData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handelSubmit = async (e) => {
+    e.preventDefault();
+    try{
+      const result = await loginService(loginData)
+       Cookies.set("token",result.accessToken)
+       navigate('/ordermanagment')
+    }catch(error){
+      console.log(error)
+    }
+      
+  };
+
+  const usernameHandler = (e) => {
+    setLoginData({
+      ...loginData,
+      username: e.target.value,
+    });
+  };
+
+  const passwordHandler = (e) => {
+    setLoginData({
+      ...loginData,
+      password: e.target.value,
+    });
+  };
+
   return (
     <>
       <div className="flex min-h-screen items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-100">
@@ -26,6 +64,7 @@ function Login() {
           </div>
           <form
             className="mt-8 space-y-6 flex flex-col "
+            onSubmit={handelSubmit}
             action="#"
             method="POST"
           >
@@ -33,11 +72,12 @@ function Login() {
               id="email-address"
               lable="نام کاربری"
               name="email"
-              type="email"
+              type="text"
               autoComplete="email"
               required
               className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               placeholder=""
+              onchange={usernameHandler}
             />
             <TextField
               id="password"
@@ -48,6 +88,7 @@ function Login() {
               required
               className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               placeholder=""
+              onchange={passwordHandler}
             />
 
             <div className="flex items-center justify-between">
