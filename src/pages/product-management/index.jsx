@@ -12,32 +12,26 @@ import { fetchCategory } from "../../states/slices/categorySlice";
 import { fetchSubcategory } from "../../states/slices/subcategorySlice";
 
 function ProductManagment() {
+
   const products = useSelector((store) => store.products);
   const productsCount = useSelector((store) => store.products.data.count);
+  const category = useSelector((store)=>store.category);
+  const subcategory = useSelector((store)=>store.subcategory);
+
   const dispatch = useDispatch();
 
-  const category = useSelector((store)=>store.category)
-
-  const subcategory = useSelector((store)=>store.subcategory)
-
   const [active, setActive] = useState("1");
+  const [searchParams, setSearchParams] = useState("");
 
   const [paginationParams, setPaginationParams] = useSearchParams({
     _page: 1,
     _limit: 5,
   });
 
-  const [searchParams, setSearchParams] = useState("");
 
   useEffect(() => {
     dispatch(fetchproducts(paginationParams));
-  }, []);
-
-  useEffect(() => {
     dispatch(fetchCategory());
-  }, []);
-
-  useEffect(() => {
     dispatch(fetchSubcategory());
   }, []);
 
@@ -46,7 +40,6 @@ function ProductManagment() {
     setSearchParams(e.target.value);
   };
 
-  console.log(subcategory.data.subcategoryData)
 
   return (
     <div className="flex">
@@ -57,8 +50,6 @@ function ProductManagment() {
           <SearchField
             className="p-1 w-96 text-sm bg-transparent outline-0"
             placeholder="جستجو ..."
-            // searchParams={searchParams}
-            // setSearchParams = {setSearchParams}
             onchange={searchHandler}
           />
           <Button
@@ -73,7 +64,6 @@ function ProductManagment() {
             tbodyData={products.data.productsData}
             categoryData={category.data.categoryData}
             subcategoryData={subcategory.data.subcategoryData}
-            // searchParams={searchParams}
           />
         ) : (
           ""

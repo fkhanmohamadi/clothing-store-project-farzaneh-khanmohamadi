@@ -10,8 +10,10 @@ import Statistics from "../../layout/Statistics";
 import { fetchOrders } from "../../states/slices/ordersSlice";
 
 function OrdersManagment() {
+
   const orders = useSelector((store) => store.orders);
   const ordersCount = useSelector((store) => store.orders.data.count);
+
   const dispatch = useDispatch();
 
   const [active, setActive] = useState("1");
@@ -20,7 +22,7 @@ function OrdersManagment() {
     _page: 1,
     _limit: 5,
     delivered: false,
-    });
+  });
 
   const [searchParams, setSearchParams] = useState("");
 
@@ -30,7 +32,14 @@ function OrdersManagment() {
 
   const searchHandler = (e) => {
     setSearchParams(e.target.value);
-    console.log(searchParams)
+    console.log(searchParams);
+    setPaginationParams({
+      _page: 1,
+      _limit: 5,
+      delivered: false,
+      name: searchParams,
+    });
+    dispatch(fetchOrders(paginationParams));
   };
 
   return (
@@ -42,8 +51,6 @@ function OrdersManagment() {
           <SearchField
             className="p-1 w-96 text-sm bg-transparent outline-0"
             placeholder="جستجو ..."
-            // searchParams={searchParams}
-            // setSearchParams = {setSearchParams}
             onchange={searchHandler}
           />
           <RadioField />

@@ -40,8 +40,6 @@ function QuantityManagment() {
           <SearchField
             className="p-1 w-96 text-sm bg-transparent outline-0"
             placeholder="جستجو ..."
-            // searchParams={searchParams}
-            // setSearchParams = {setSearchParams}
             onchange={searchHandler}
           />
           <Button
@@ -54,7 +52,6 @@ function QuantityManagment() {
         {products.status === "success" ? (
           <QuantityTable
             tbodyData={products.data.productsData}
-            // searchParams={searchParams}
           />
         ) : (
           ""
