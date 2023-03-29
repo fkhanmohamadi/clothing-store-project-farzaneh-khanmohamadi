@@ -1,6 +1,6 @@
 import React from "react";
 
-function TextField({id,lable,name,type,autoComplete,required,className,placeholder}) {
+function TextField({id,lable,name,type,autoComplete,required,className,placeholder,onchange}) {
   return (
     <div className="flex flex-col space-y-3"> 
       <label htmlFor={id}>
@@ -14,6 +14,7 @@ function TextField({id,lable,name,type,autoComplete,required,className,placehold
         required 
         className = {className}
         placeholder ={placeholder}
+        onChange={onchange}
       />
     </div>
   );
