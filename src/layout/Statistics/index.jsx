@@ -19,10 +19,10 @@ function Statistics() {
   const ordersCount = useSelector((store) => store.orders.data.count);
   const productsCount = useSelector((store) => store.products.data.count);
 
-  useEffect(() => {
-    dispatch(fetchOrders(paginationParams));
-    dispatch(fetchproducts(paginationParams));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchOrders(paginationParams));
+  //   dispatch(fetchproducts(paginationParams));
+  // }, []);
   
   return (
     <div className="container mt-5">

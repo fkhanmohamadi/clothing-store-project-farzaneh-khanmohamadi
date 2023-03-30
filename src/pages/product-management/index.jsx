@@ -10,6 +10,7 @@ import { fetchproducts } from "../../states/slices/productsSlice";
 import ProductsTable from "../../components/products-table";
 import { fetchCategory } from "../../states/slices/categorySlice";
 import { fetchSubcategory } from "../../states/slices/subcategorySlice";
+import ProductManagementModal from "../../components/product-management-modal";
 
 function ProductManagment() {
 
@@ -22,6 +23,7 @@ function ProductManagment() {
 
   const [active, setActive] = useState("1");
   const [searchParams, setSearchParams] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const [paginationParams, setPaginationParams] = useSearchParams({
     _page: 1,
@@ -40,6 +42,9 @@ function ProductManagment() {
     setSearchParams(e.target.value);
   };
 
+  const showModalHandler =()=>{
+    setShowModal(true)
+  }
 
   return (
     <div className="flex">
@@ -55,9 +60,10 @@ function ProductManagment() {
           <Button
             type="submit"
             className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onclick={showModalHandler}
           >
             افزودن کالا
-          </Button>
+          </Button >
         </div>
         {products.status === "success" ? (
           <ProductsTable
@@ -73,7 +79,9 @@ function ProductManagment() {
           count={productsCount}
           active={active}
           setActive={setActive}
+          funName={fetchproducts}
         />
+        <ProductManagementModal showModal={showModal} setShowModal={setShowModal}/>
       </div>
     </div>
   );

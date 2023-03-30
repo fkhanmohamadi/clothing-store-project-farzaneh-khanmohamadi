@@ -1,6 +1,6 @@
 import React from "react";
 
-function RadioField() {
+function RadioField({ onchanged, delivered }) {
   return (
     <div className="flex gap-10">
       <div className="flex gap-2 items-center">
@@ -8,8 +8,9 @@ function RadioField() {
           type="radio"
           id="delivered"
           name="delivery"
-          value="delivered"
-          // onChange={this.onSiteChanged}
+          value="true"
+          checked={delivered}
+          onChange={onchanged}
         />
         <label className="text-sm text-gray-500	" htmlFor="delivered">
           سفارش های تحویل شده
@@ -20,9 +21,9 @@ function RadioField() {
           type="radio"
           id="undelivered"
           name="delivery"
-          value="undelivered"
-          checked
-          // onChange={this.onSiteChanged}
+          value="false"
+          checked={!delivered}
+          onChange={onchanged}
         />
         <label className="text-sm text-gray-500	" htmlFor="undelivered">
           سفارش های در انتظار ارسال

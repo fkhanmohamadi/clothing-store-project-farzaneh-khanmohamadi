@@ -13,15 +13,16 @@ function OrdersManagment() {
 
   const orders = useSelector((store) => store.orders);
   const ordersCount = useSelector((store) => store.orders.data.count);
-
+  
   const dispatch = useDispatch();
 
   const [active, setActive] = useState("1");
+  const [delivered, setDelivered] = useState(false);
 
   const [paginationParams, setPaginationParams] = useSearchParams({
     _page: 1,
     _limit: 5,
-    delivered: false,
+    delivered,
   });
 
   const [searchParams, setSearchParams] = useState("");
@@ -30,18 +31,32 @@ function OrdersManagment() {
     dispatch(fetchOrders(paginationParams));
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchOrders(paginationParams));
+  }, [paginationParams]);
+
   const searchHandler = (e) => {
+
     setSearchParams(e.target.value);
+
     console.log(searchParams);
+
     setPaginationParams({
       _page: 1,
       _limit: 5,
-      delivered: false,
+      delivered,
       name: searchParams,
     });
     dispatch(fetchOrders(paginationParams));
   };
 
+  const handelDeliveredChenge = (e)=>{
+    setDelivered(e.target.value==="true"?true:false);
+    setPaginationParams({_page: 1,_limit: 5,delivered:e.target.value})
+    // dispatch(fetchOrders({_page: 1,_limit: 5,delivered:e.target.value}));
+}
+
+console.log("object")
   return (
     <div className="flex">
       <HeaderManagment />
@@ -53,7 +68,7 @@ function OrdersManagment() {
             placeholder="جستجو ..."
             onchange={searchHandler}
           />
-          <RadioField />
+          <RadioField onchanged={handelDeliveredChenge} delivered={delivered}/>
         </div>
         {orders.status === "success" ? (
           <OrdersTable
@@ -68,6 +83,7 @@ function OrdersManagment() {
           count={ordersCount}
           active={active}
           setActive={setActive}
+          funName={fetchOrders}
         />
       </div>
     </div>

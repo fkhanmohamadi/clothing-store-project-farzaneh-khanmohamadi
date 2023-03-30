@@ -8,8 +8,9 @@ export const fetchOrderService = async (params) => {
     const response = await instance.get(
       `/orders?${params}`
     );
-    const countRes = await instance.get(`/orders`);
+    const countRes = await instance.get(`/orders?delivered=${params.get("delivered")}`);
     const allData = await countRes.data;
+    console.log(allData)
     count = await allData.length;
     return {
       ordersData: response.data,

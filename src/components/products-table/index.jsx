@@ -49,7 +49,7 @@ function ProductsTable({tbodyData, categoryData, subcategoryData}) {
                                         {row.id}
                                     </td>
                                     <td className="px-3 py-2 h-30 whitespace-nowrap">
-                                    <img src={row.thumbnail} alt="" className="h-11 w-11" />
+                                    <img src={`http://localhost:3002/files/${row.thumbnail}`} alt="" className="h-11 w-11" />
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                                     {row.name}
