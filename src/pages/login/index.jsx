@@ -10,8 +10,17 @@ import { useState } from "react";
 import { loginService } from "../../api/services/auth";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
+
+  const showToastMessage = () => {
+    toast.error('اطلاعات ورودی معتبر نمی باشد', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+};
+  
 
   const navigate = useNavigate();
 
@@ -28,6 +37,7 @@ function Login() {
        navigate('/ordersmanagment')
     }catch(error){
       console.log(error)
+      showToastMessage()
     }
       
   };
@@ -45,6 +55,8 @@ function Login() {
       password: e.target.value,
     });
   };
+
+
 
   return (
     <>
@@ -116,6 +128,7 @@ function Login() {
                 ورود
               </Button>
             </div>
+            <ToastContainer/>
           </form>
         </div>
       </div>
