@@ -57,7 +57,8 @@ function QuantityManagment() {
           ""
         )}
         <Pagination
-          params={paginationParams}
+          paginationParams={paginationParams}
+          setPaginationParams={setPaginationParams}
           count={productsCount}
           active={active}
           setActive={setActive}

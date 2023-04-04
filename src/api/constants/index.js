@@ -29,7 +29,6 @@ instance.interceptors.response.use(response => {
     if (status === 401) {
         instance.defaults.headers.refreshToken = localStorage.getItem('refresh_token');
         instance.post('/auth/refresh-token').then(({ data }) => {
-            console.log(data)
             const { accessToken } = data;
             localStorage.setItem('token', accessToken);
             window.location.reload()

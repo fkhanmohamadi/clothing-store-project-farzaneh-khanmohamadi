@@ -10,10 +10,9 @@ import Statistics from "../../layout/Statistics";
 import { fetchOrders } from "../../states/slices/ordersSlice";
 
 function OrdersManagment() {
-
   const orders = useSelector((store) => store.orders);
   const ordersCount = useSelector((store) => store.orders.data.count);
-  
+
   const dispatch = useDispatch();
 
   const [active, setActive] = useState("1");
@@ -25,8 +24,6 @@ function OrdersManagment() {
     delivered,
   });
 
-  const [searchParams, setSearchParams] = useState("");
-
   useEffect(() => {
     dispatch(fetchOrders(paginationParams));
   }, []);
@@ -36,27 +33,42 @@ function OrdersManagment() {
   }, [paginationParams]);
 
   const searchHandler = (e) => {
+    if (e.target.value==""){
+      setPaginationParams({
+        _page: 1,
+        _limit: 5,
+        delivered,
+      });
+      dispatch(fetchOrders(paginationParams));
+    }
 
-    setSearchParams(e.target.value);
+    else{
+      setPaginationParams({
+        _page: 1,
+        _limit: 5,
+        delivered,
+        firstname: e.target.value,
+      });
+      dispatch(fetchOrders(paginationParams));
+    }
+  };
 
-    console.log(searchParams);
+  const handelDeliveredChenge = (e) => {
+    setDelivered(e.target.value === "true" ? true : false);
+    setPaginationParams({ _page: 1, _limit: 5, delivered: e.target.value });
+  };
 
+  const HandelSort = () => {
     setPaginationParams({
       _page: 1,
       _limit: 5,
       delivered,
-      name: searchParams,
+      _sort: "createdAt",
+      _order: "desc"
     });
     dispatch(fetchOrders(paginationParams));
   };
 
-  const handelDeliveredChenge = (e)=>{
-    setDelivered(e.target.value==="true"?true:false);
-    setPaginationParams({_page: 1,_limit: 5,delivered:e.target.value})
-    // dispatch(fetchOrders({_page: 1,_limit: 5,delivered:e.target.value}));
-}
-
-console.log("object")
   return (
     <div className="flex">
       <HeaderManagment />
@@ -68,22 +80,24 @@ console.log("object")
             placeholder="جستجو ..."
             onchange={searchHandler}
           />
-          <RadioField onchanged={handelDeliveredChenge} delivered={delivered}/>
+          <RadioField onchanged={handelDeliveredChenge} delivered={delivered} />
         </div>
         {orders.status === "success" ? (
           <OrdersTable
             tbodyData={orders.data.ordersData}
-            searchParams={searchParams}
+            onclick={HandelSort}
           />
         ) : (
           ""
         )}
         <Pagination
-          params={paginationParams}
+          paginationParams={paginationParams}
+          setPaginationParams={setPaginationParams}
           count={ordersCount}
           active={active}
           setActive={setActive}
           funName={fetchOrders}
+          
         />
       </div>
     </div>

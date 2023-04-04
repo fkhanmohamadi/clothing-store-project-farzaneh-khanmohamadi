@@ -3,7 +3,14 @@ import { useDispatch } from "react-redux";
 import { fetchOrders } from "../../states/slices/ordersSlice";
 import { fetchproducts } from "../../states/slices/productsSlice";
 
-function Pagination({ params, count, active, setActive, funName }) {
+function Pagination({
+  paginationParams,
+  setPaginationParams,
+  count,
+  active,
+  setActive,
+  funName,
+}) {
   const dispatch = useDispatch();
 
   const changePage = (e) => {
@@ -14,14 +21,48 @@ function Pagination({ params, count, active, setActive, funName }) {
 
     setActive(pageNum);
 
-    const deliver = params.get("delivered")?`&delivered=${params.get("delivered")}`:''
-    dispatch(
-      funName(`_page=${pageNum}&_limit=${params.get("_limit")}${deliver}`)
-    );
+    console.log("pageNum:",pageNum);
+    console.log("_limit:",paginationParams.get("_limit"));
+    console.log("delivered:",paginationParams.get("delivered"));
+    console.log("_sort",paginationParams.get("_sort"));
+    console.log("_order",paginationParams.get("_order"));
 
-    console.log(funName)
-    console.log(deliver)
 
+    if (
+      paginationParams.get("delivered") &&
+      paginationParams.get("_sort") &&
+      paginationParams.get("_order")
+    )
+      setPaginationParams({
+        _page: pageNum,
+        _limit: paginationParams.get("_limit"),
+        delivered: paginationParams.get("delivered"),
+        sort: paginationParams.get("_sort"),
+        order: paginationParams.get("_order"),
+      });
+    else if (
+      paginationParams.get("delivered") &&
+      !paginationParams.get("_sort") &&
+      !paginationParams.get("_order")
+    )
+      setPaginationParams({
+        _page: pageNum,
+        _limit: paginationParams.get("_limit"),
+        delivered: paginationParams.get("delivered"),
+      });
+      else if(
+        !paginationParams.get("delivered") &&
+        !paginationParams.get("_sort") &&
+        !paginationParams.get("_order")
+      )
+      setPaginationParams({
+          _page: pageNum,
+          _limit: paginationParams.get("_limit"),
+        })
+
+
+
+    dispatch(funName(paginationParams));
   };
 
   useEffect(() => {
@@ -29,10 +70,9 @@ function Pagination({ params, count, active, setActive, funName }) {
   }, []);
 
   let items = [];
-  console.log(count);
   for (
     let number = 1;
-    number <= Math.ceil(count / params.get("_limit"));
+    number <= Math.ceil(count / paginationParams.get("_limit"));
     number++
   ) {
     items.push(

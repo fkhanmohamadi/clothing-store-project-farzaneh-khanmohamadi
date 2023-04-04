@@ -9,7 +9,7 @@ function StatisticsList({ title, count, children }) {
           <span>{title}</span>
         </div>
         <span className="mt-1 text-xl font-semibold text-gray-700">
-          {count}
+        {new Intl.NumberFormat("fa-IR").format(count)}
         </span>
       </div>
     </div>
