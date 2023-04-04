@@ -1,6 +1,11 @@
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import React from "react";
+import Button from "../button"
 
-function OrdersTable({ tbodyData }) {
+function OrdersTable({ tbodyData, onclick }) {
+
+
+
   return (
     <div>
       <div className="flex flex-col">
@@ -30,9 +35,12 @@ function OrdersTable({ tbodyData }) {
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-xs text-right font-bold text-left text-gray-500 uppercase "
+                      className=" flex gap-1 px-6 py-3 text-xs text-right font-bold text-left text-gray-500 uppercase "
                     >
                       زمان ثبت سفارش
+                      <Button onclick={onclick}>
+                      <ChevronDownIcon className="h-4 w-4 text-black-500"/>
+                      </Button>
                     </th>
                     <th
                       scope="col"

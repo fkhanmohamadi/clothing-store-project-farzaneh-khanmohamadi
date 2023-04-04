@@ -3,26 +3,12 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import StatisticsList from "../../components/statistics-list";
-import { fetchOrders } from "../../states/slices/ordersSlice";
-import { fetchproducts } from "../../states/slices/productsSlice";
 
 function Statistics() {
-
-  const dispatch = useDispatch();
-  
-  const [paginationParams, setPaginationParams] = useSearchParams({
-    _page: 1,
-    _limit: 5,
-    delivered: false,
-  });
 
   const ordersCount = useSelector((store) => store.orders.data.count);
   const productsCount = useSelector((store) => store.products.data.count);
 
-  // useEffect(() => {
-  //   dispatch(fetchOrders(paginationParams));
-  //   dispatch(fetchproducts(paginationParams));
-  // }, []);
   
   return (
     <div className="container mt-5">
