@@ -27,7 +27,9 @@ const schema = yup.object({
   ),
   price: yup.string().required("قیمت محصول الزامیست ."),
   quantity: yup.string().required("تعداد محصول الزامیست ."),
-  brand: yup.string().required(" محصول الزامیست ."),
+  brand: yup.string().required(" برند محصول الزامیست ."),
+  category: yup.string().required(" دسته بندی محصول الزامیست ."),
+  subcategory: yup.string().required(" زیر دسته بندی محصول الزامیست ."),
 });
 
 const uploadHandler = async (img) => {
@@ -67,21 +69,21 @@ export default function ProductManagementModal({
 
     const newProduct = {
       name: data.name,
-      brand: "",
+      brand: data.brand,
       image: image,
       thumbnail: thumbnail,
       price: data.price,
       quantity: data.quantity,
-      category: "",
-      subcategory: "",
+      category: data.category,
+      subcategory: data.subcategory,
       description: "",
     };
-    // try{
-    //   const result = await addProductService(newProduct)
-    //   console.log(result)
-    // }catch(error){
-    //   console.log(error)
-    // }
+    try {
+      const result = await addProductService(newProduct);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
     setShowModal(false);
   };
 
@@ -109,56 +111,64 @@ export default function ProductManagementModal({
                     className=" mt-2 space-y-6 flex flex-col text-sm"
                     onSubmit={handleSubmit(submitForm)}
                   >
-                    <input
+                    <TextField
                       id="name"
+                      lable="نام کالا"
                       name="name"
                       type="text"
-                      className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder=""
-                      {...register("name")}
+                      error={errors.name?.message}
+                      validation={{ ...register("name") }}
                     />
-                    <p>{errors.name?.message}</p>
                     <div className="flex justify-between">
-                      <input
+                      <FileField
                         id="thumbnail"
-                        type="file"
+                        lable=" تصویر کالا"
                         name="thumbnail"
-                        {...register("thumbnail")}
+                        error={errors.thumbnail?.message}
+                        validation={{ ...register("thumbnail") }}
                       />
-                      <p>{errors.thumbnail?.message}</p>
-                      <input
+                      <FileField
                         id="image"
-                        type="file"
+                        lable="سایر تصاویر کالا"
                         name="image"
-                        {...register("image")}
                         multiple
+                        error={errors.image?.message}
+                        validation={{ ...register("image") }}
                       />
-                      <p>{errors.image?.message}</p>
                     </div>
                     <div className="flex justify-between">
-                      <input
+                      <TextField
                         id="price"
+                        lable="قیمت کالا"
                         name="price"
                         type="text"
-                        className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         placeholder=""
-                        {...register("price")}
+                        error={errors.price?.message}
+                        validation={{ ...register("price") }}
                       />
-                      <p>{errors.price?.message}</p>
-                      <input
+                      <TextField
                         id="quantity"
+                        lable="تعداد کالا"
                         name="quantity"
                         type="text"
-                        className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         placeholder=""
-                        {...register("quantity")}
+                        error={errors.quantity?.message}
+                        validation={{ ...register("quantity") }}
                       />
-                      <p>{errors.quantity?.message}</p>
                     </div>
                     <div className="flex justify-between">
                       <div className="flex flex-col">
                         <label htmlFor="brand">برند کالا</label>
-                        <select id="brand" name="brand" {...register("brand")}>
+                        <select
+                          id="brand"
+                          name="brand"
+                          {...register("brand")}
+                          className="rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        >
                           {brandsData.map((row, index) => {
                             return (
                               <OptionField value={row.id}>
@@ -174,6 +184,7 @@ export default function ProductManagementModal({
                         <select
                           id="category"
                           name="category"
+                          className="rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           {...register("category")}
                         >
                           {categoryData.map((row, index) => {
@@ -191,6 +202,7 @@ export default function ProductManagementModal({
                         <select
                           id="subcategory"
                           name="subcategory"
+                          className="rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                           {...register("subcategory")}
                         >
                           {subcategoryData.map((row, index) => {
@@ -204,95 +216,6 @@ export default function ProductManagementModal({
                         <p>{errors.subcategory?.message}</p>
                       </div>
                     </div>
-                    {/* <div className="flex justify-between"> */}
-                    {/* <FileField
-                        id="thumbnail"
-                        lable="تصویر کالا"
-                        name="thumbnail"
-                        onchange={thumbnailHandler}
-                      /> */}
-                    {/* <FileField
-                        id="product-img"
-                        lable="سایر تصاویر کالا"
-                        name="product-img"
-                        onchange={imageHandler}
-                      />
-                    </div>
-                    <div className="w-full flex justify-between">
-                      <TextField
-                        id="Product-price"
-                        lable="قیمت کالا"
-                        name="Product-price"
-                        type="text"
-                        required
-                        className="relative block rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        placeholder=""
-                        onchange={priceHandler}
-                      />
-                      <TextField
-                        id="Product-quantity"
-                        lable="تعداد کالا"
-                        name="Product-quantity"
-                        type="text"
-                        required
-                        className="relative block rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        placeholder=""
-                        onchange={quantityHandler}
-                      />
-                    </div>
-                    <div className="flex justify-between">
-                      <div className="flex flex-col">
-                        <label htmlFor="product-brand">برند کالا</label>
-                        <select
-                          id="product-brand"
-                          name="product-brand"
-                          onChange={brandsHandler}
-                        >
-                          {brandsData.map((row, index) => {
-                            return (
-                              <OptionField value={row.id}>
-                                {row.name}
-                              </OptionField>
-                            );
-                          })}
-                        </select>
-                      </div>
-                      <div className="flex flex-col">
-                        <label htmlFor="product-category">دسته بندی کالا</label>
-                        <select
-                          id="product-category"
-                          name="product-category"
-                          onChange={categoryHandler}
-                        >
-                          {categoryData.map((row, index) => {
-                            return (
-                              <OptionField value={row.id}>
-                                {row.name}
-                              </OptionField>
-                            );
-                          })}
-                        </select>
-                      </div>
-                      <div className="flex flex-col">
-                        <label htmlFor="product-subcategory">
-                          زیر دسته بندی کالا
-                        </label>
-                        <select
-                          id="product-subcategory"
-                          name="product-subcategory"
-                          onChange={subcategoryHandler}
-                        >
-                          {subcategoryData.map((row, index) => {
-                            return (
-                              <OptionField value={row.id}>
-                                {row.name}
-                              </OptionField>
-                            );
-                          })}
-                        </select>
-                      </div> */}
-                    {/* </div> */}
-
                     <div>
                       <Button
                         type="submit"
