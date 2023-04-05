@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "../button";
 import TextField from "../text-field";
+import FileField from "../file-field"
 
 export default function ProductManagementModal({ showModal, setShowModal }) {
   // const handelSubmit = async (e) => {
@@ -42,26 +43,50 @@ export default function ProductManagementModal({ showModal, setShowModal }) {
                     method="POST"
                   >
                     <TextField
-                      id="email-address"
-                      lable="نام کاربری"
-                      name="email"
+                      id="Product-name"
+                      lable="نام کالا"
+                      name="Product-name"
                       type="text"
-                      autoComplete="email"
+                      required
+                      className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      placeholder=""
+                      //   onchange={usernameHandler}
+                    />
+                    <FileField
+                      id="product-thumbnail"
+                      lable="تصویر کالا"
+                      name="product-thumbnail"
+                      required
+                      className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      //   onchange={passwordHandler}
+                    />
+                    <FileField
+                      id="product-img"
+                      lable="سایر تصاویر کالا"
+                      name="product-img"
+                      required
+                      className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      //   onchange={passwordHandler}
+                    />
+                    <TextField
+                      id="Product-price"
+                      lable="قیمت کالا"
+                      name="Product-price"
+                      type="text"
                       required
                       className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder=""
                       //   onchange={usernameHandler}
                     />
                     <TextField
-                      id="password"
-                      lable="رمز عبور"
-                      name="password"
-                      type="password"
-                      autoComplete="current-password"
+                      id="Product-quantity"
+                      lable="تعداد کالا"
+                      name="Product-quantity"
+                      type="text"
                       required
                       className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder=""
-                      //   onchange={passwordHandler}
+                      //   onchange={usernameHandler}
                     />
 
                     <div>
