@@ -3,6 +3,39 @@ import Button from "../button";
 import TextField from "../text-field";
 import FileField from "../file-field";
 import OptionField from "../dropdown";
+import { addProductService } from "../../api/services/addProduct";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { uploadImage } from "../../api/services/uploadImage";
+
+const schema = yup.object({
+  thumbnail: yup.mixed().test(
+    "fileNumber",
+    "وارد کردن تصویر الزامی می باشد.",
+    (files) =>
+      !files || // Check if `files` is defined
+      files.length > 0 // Check if `files` has attachment
+  ),
+  name: yup.string().required("نام محصول الزامیست ."),
+  image: yup.mixed().test(
+    "fileNumber",
+    "وارد کردن تصویر الزامی می باشد.",
+    (files) =>
+      !files || // Check if `files` is defined
+      files.length > 0 // Check if `files` has attachment
+  ),
+  price: yup.string().required("قیمت محصول الزامیست ."),
+  quantity: yup.string().required("تعداد محصول الزامیست ."),
+  brand: yup.string().required(" محصول الزامیست ."),
+});
+
+const uploadHandler = async (img) => {
+  let formData = new FormData();
+  formData.append("image", img);
+  const res = await uploadImage(formData);
+  return res.filename;
+};
 
 export default function ProductManagementModal({
   showModal,
@@ -11,17 +44,46 @@ export default function ProductManagementModal({
   subcategoryData,
   brandsData,
 }) {
-  // const handelSubmit = async (e) => {
-  //     e.preventDefault();
-  //     try{
-  //       const result = await loginService(loginData)
-  //        Cookies.set("token",result.accessToken)
-  //        navigate('/ordersmanagment')
-  //     }catch(error){
-  //       console.log(error)
-  //     }
+  const {
+    reset,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: "onChange",
+  });
 
-  //   };
+  const submitForm = async (data) => {
+    console.log(data.image);
+
+    const thumbnail = await uploadHandler(data.thumbnail[0]);
+
+    let image = [];
+    for (let i = 0; i < data.image.length; i++) {
+      const res = await uploadHandler(data.image[i]);
+      image.push(res);
+    }
+
+    const newProduct = {
+      name: data.name,
+      brand: "",
+      image: image,
+      thumbnail: thumbnail,
+      price: data.price,
+      quantity: data.quantity,
+      category: "",
+      subcategory: "",
+      description: "",
+    };
+    // try{
+    //   const result = await addProductService(newProduct)
+    //   console.log(result)
+    // }catch(error){
+    //   console.log(error)
+    // }
+    setShowModal(false);
+  };
 
   return (
     <>
@@ -45,32 +107,115 @@ export default function ProductManagementModal({
                 <div className="relative px-6 py-4 flex-auto">
                   <form
                     className=" mt-2 space-y-6 flex flex-col text-sm"
-                    // onSubmit={handelSubmit}
-                    action="#"
-                    method="POST"
+                    onSubmit={handleSubmit(submitForm)}
                   >
-                    <TextField
-                      id="Product-name"
-                      lable="نام کالا"
-                      name="Product-name"
+                    <input
+                      id="name"
+                      name="name"
                       type="text"
-                      required
                       className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       placeholder=""
-                      //   onchange={usernameHandler}
+                      {...register("name")}
                     />
+                    <p>{errors.name?.message}</p>
                     <div className="flex justify-between">
-                      <FileField
-                        id="product-thumbnail"
-                        lable="تصویر کالا"
-                        name="product-thumbnail"
-                        //   onchange={passwordHandler}
+                      <input
+                        id="thumbnail"
+                        type="file"
+                        name="thumbnail"
+                        {...register("thumbnail")}
                       />
-                      <FileField
+                      <p>{errors.thumbnail?.message}</p>
+                      <input
+                        id="image"
+                        type="file"
+                        name="image"
+                        {...register("image")}
+                        multiple
+                      />
+                      <p>{errors.image?.message}</p>
+                    </div>
+                    <div className="flex justify-between">
+                      <input
+                        id="price"
+                        name="price"
+                        type="text"
+                        className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        placeholder=""
+                        {...register("price")}
+                      />
+                      <p>{errors.price?.message}</p>
+                      <input
+                        id="quantity"
+                        name="quantity"
+                        type="text"
+                        className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        placeholder=""
+                        {...register("quantity")}
+                      />
+                      <p>{errors.quantity?.message}</p>
+                    </div>
+                    <div className="flex justify-between">
+                      <div className="flex flex-col">
+                        <label htmlFor="brand">برند کالا</label>
+                        <select id="brand" name="brand" {...register("brand")}>
+                          {brandsData.map((row, index) => {
+                            return (
+                              <OptionField value={row.id}>
+                                {row.name}
+                              </OptionField>
+                            );
+                          })}
+                        </select>
+                        <p>{errors.brand?.message}</p>
+                      </div>
+                      <div className="flex flex-col">
+                        <label htmlFor="category">دسته بندی کالا</label>
+                        <select
+                          id="category"
+                          name="category"
+                          {...register("category")}
+                        >
+                          {categoryData.map((row, index) => {
+                            return (
+                              <OptionField value={row.id}>
+                                {row.name}
+                              </OptionField>
+                            );
+                          })}
+                        </select>
+                        <p>{errors.category?.message}</p>
+                      </div>
+                      <div className="flex flex-col">
+                        <label htmlFor="subcategory">زیر دسته بندی کالا</label>
+                        <select
+                          id="subcategory"
+                          name="subcategory"
+                          {...register("subcategory")}
+                        >
+                          {subcategoryData.map((row, index) => {
+                            return (
+                              <OptionField value={row.id}>
+                                {row.name}
+                              </OptionField>
+                            );
+                          })}
+                        </select>
+                        <p>{errors.subcategory?.message}</p>
+                      </div>
+                    </div>
+                    {/* <div className="flex justify-between"> */}
+                    {/* <FileField
+                        id="thumbnail"
+                        lable="تصویر کالا"
+                        name="thumbnail"
+                        onchange={thumbnailHandler}
+                      /> */}
+                    {/* <FileField
                         id="product-img"
                         lable="سایر تصاویر کالا"
                         name="product-img"
-                        //   onchange={passwordHandler}
+                        onchange={imageHandler}
                       />
                     </div>
                     <div className="w-full flex justify-between">
@@ -82,7 +227,7 @@ export default function ProductManagementModal({
                         required
                         className="relative block rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         placeholder=""
-                        //   onchange={usernameHandler}
+                        onchange={priceHandler}
                       />
                       <TextField
                         id="Product-quantity"
@@ -92,13 +237,17 @@ export default function ProductManagementModal({
                         required
                         className="relative block rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         placeholder=""
-                        //   onchange={usernameHandler}
+                        onchange={quantityHandler}
                       />
                     </div>
                     <div className="flex justify-between">
                       <div className="flex flex-col">
                         <label htmlFor="product-brand">برند کالا</label>
-                        <select id="product-brand" name="product-brand">
+                        <select
+                          id="product-brand"
+                          name="product-brand"
+                          onChange={brandsHandler}
+                        >
                           {brandsData.map((row, index) => {
                             return (
                               <OptionField value={row.id}>
@@ -110,7 +259,11 @@ export default function ProductManagementModal({
                       </div>
                       <div className="flex flex-col">
                         <label htmlFor="product-category">دسته بندی کالا</label>
-                        <select id="product-category" name="product-category">
+                        <select
+                          id="product-category"
+                          name="product-category"
+                          onChange={categoryHandler}
+                        >
                           {categoryData.map((row, index) => {
                             return (
                               <OptionField value={row.id}>
@@ -127,6 +280,7 @@ export default function ProductManagementModal({
                         <select
                           id="product-subcategory"
                           name="product-subcategory"
+                          onChange={subcategoryHandler}
                         >
                           {subcategoryData.map((row, index) => {
                             return (
@@ -136,14 +290,13 @@ export default function ProductManagementModal({
                             );
                           })}
                         </select>
-                      </div>
-                    </div>
+                      </div> */}
+                    {/* </div> */}
 
                     <div>
                       <Button
                         type="submit"
                         className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        onclick={() => setShowModal(false)}
                       >
                         ذخیره
                       </Button>

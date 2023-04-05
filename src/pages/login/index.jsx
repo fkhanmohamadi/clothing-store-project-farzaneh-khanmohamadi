@@ -12,6 +12,15 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+
+const schema = yup.object({
+  username: yup.string().required("نام کاربری الزامیست ."),
+  password: yup.string().required(" پسورد الزامیست ."),
+});
+
 
 function Login() {
 
@@ -20,20 +29,31 @@ function Login() {
         position: toast.POSITION.TOP_RIGHT
     });
 };
-  
 
   const navigate = useNavigate();
 
-  const [loginData, setLoginData] = useState({
-    username: "",
-    password: "",
+  const {
+    reset,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: "onChange",
   });
 
-  const handelSubmit = async (e) => {
-    e.preventDefault();
+  const submitForm = async (data) => {
+console.log(data)
+    const loginData = {
+      username: data.username,
+      password: data.password,
+    };
+
     try{
       const result = await loginService(loginData)
-       Cookies.set("token",result.accessToken)
+       localStorage.setItem("token", result.accessToken);
+       localStorage.setItem("refresh_token",result.refreshToken);
+
        navigate('/ordersmanagment')
     }catch(error){
       console.log(error)
@@ -41,22 +61,6 @@ function Login() {
     }
       
   };
-
-  const usernameHandler = (e) => {
-    setLoginData({
-      ...loginData,
-      username: e.target.value,
-    });
-  };
-
-  const passwordHandler = (e) => {
-    setLoginData({
-      ...loginData,
-      password: e.target.value,
-    });
-  };
-
-
 
   return (
     <>
@@ -76,31 +80,27 @@ function Login() {
           </div>
           <form
             className="mt-8 space-y-6 flex flex-col "
-            onSubmit={handelSubmit}
-            action="#"
-            method="POST"
+            onSubmit={handleSubmit(submitForm)}
           >
             <TextField
-              id="email-address"
+              id="username"
               lable="نام کاربری"
-              name="email"
+              name="username"
               type="text"
-              autoComplete="email"
-              required
               className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               placeholder=""
-              onchange={usernameHandler}
+              error={errors.username?.message}
+              validation={{ ...register("username") }}
             />
             <TextField
               id="password"
               lable="رمز عبور"
               name="password"
               type="password"
-              autoComplete="current-password"
-              required
               className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               placeholder=""
-              onchange={passwordHandler}
+              error={errors.password?.message}
+              validation={{ ...register("password") }}
             />
 
             <div className="flex items-center justify-between">

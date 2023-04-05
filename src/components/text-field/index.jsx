@@ -5,11 +5,10 @@ function TextField({
   lable,
   name,
   type,
-  autoComplete,
-  required,
   className,
   placeholder,
-  onchange,
+  error,
+  validation
 }) {
   return (
     <div className="flex flex-col space-y-3">
@@ -18,12 +17,11 @@ function TextField({
         id={id}
         name={name}
         type={type}
-        autoComplete={autoComplete}
-        required
         className={className}
         placeholder={placeholder}
-        onChange={onchange}
+        validation = {validation}
       />
+      <p>{error}</p>
     </div>
   );
 }

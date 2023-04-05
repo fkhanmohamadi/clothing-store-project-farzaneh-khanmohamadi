@@ -21,16 +21,16 @@ function App() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    if (pathname == "/login" && Cookies.get("token")) {
+    if (pathname == "/login" && localStorage.getItem("token")) {
       navigate("/ordersmanagment");
     }
-    if (pathname == "/productmanagment" && !Cookies.get("token")) {
+    if (pathname == "/productmanagment" && !localStorage.getItem("token")) {
       navigate("/login");
     }
-    if (pathname == "/quantitymanagement" && !Cookies.get("token")) {
+    if (pathname == "/quantitymanagement" && !localStorage.getItem("token")) {
       navigate("/login");
     }
-    if (pathname == "/ordersmanagment" && !Cookies.get("token")) {
+    if (pathname == "/ordersmanagment" && !localStorage.getItem("token")) {
       navigate("/login");
     }
   }, [pathname]);
