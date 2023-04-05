@@ -10,6 +10,7 @@ import { fetchproducts } from "../../states/slices/productsSlice";
 import ProductsTable from "../../components/products-table";
 import { fetchCategory } from "../../states/slices/categorySlice";
 import { fetchSubcategory } from "../../states/slices/subcategorySlice";
+import { fetchBrands } from "../../states/slices/bransSlice";
 import ProductManagementModal from "../../components/product-management-modal";
 
 function ProductManagment() {
@@ -17,6 +18,7 @@ function ProductManagment() {
   const productsCount = useSelector((store) => store.products.data.count);
   const category = useSelector((store) => store.category);
   const subcategory = useSelector((store) => store.subcategory);
+  const brands = useSelector((store) => store.brands);
 
   const dispatch = useDispatch();
 
@@ -33,6 +35,7 @@ function ProductManagment() {
     dispatch(fetchproducts(paginationParams));
     dispatch(fetchCategory());
     dispatch(fetchSubcategory());
+    dispatch(fetchBrands());
   }, []);
 
   const searchHandler = (e) => {
@@ -84,6 +87,7 @@ function ProductManagment() {
           setShowModal={setShowModal}
           categoryData={category.data.categoryData}
           subcategoryData={subcategory.data.subcategoryData}
+          brandsData={brands.data.brandsData}
         />
       </div>
     </div>

@@ -9,6 +9,7 @@ export default function ProductManagementModal({
   setShowModal,
   categoryData,
   subcategoryData,
+  brandsData,
 }) {
   // const handelSubmit = async (e) => {
   //     e.preventDefault();
@@ -43,7 +44,7 @@ export default function ProductManagementModal({
                 {/*body*/}
                 <div className="relative px-6 py-4 flex-auto">
                   <form
-                    className=" mt-2 space-y-6 flex flex-col "
+                    className=" mt-2 space-y-6 flex flex-col text-sm"
                     // onSubmit={handelSubmit}
                     action="#"
                     method="POST"
@@ -98,16 +99,24 @@ export default function ProductManagementModal({
                       <div className="flex flex-col">
                         <label htmlFor="product-brand">برند کالا</label>
                         <select id="product-brand" name="product-brand">
-                          <OptionField value={1}>1</OptionField>
-                          <OptionField value={2}>2</OptionField>
-                          <OptionField value={3}>3</OptionField>
+                          {brandsData.map((row, index) => {
+                            return (
+                              <OptionField value={row.id}>
+                                {row.name}
+                              </OptionField>
+                            );
+                          })}
                         </select>
                       </div>
                       <div className="flex flex-col">
                         <label htmlFor="product-category">دسته بندی کالا</label>
                         <select id="product-category" name="product-category">
                           {categoryData.map((row, index) => {
-                            return <OptionField value={row.id}>{row.name}</OptionField>;
+                            return (
+                              <OptionField value={row.id}>
+                                {row.name}
+                              </OptionField>
+                            );
                           })}
                         </select>
                       </div>
@@ -120,7 +129,11 @@ export default function ProductManagementModal({
                           name="product-subcategory"
                         >
                           {subcategoryData.map((row, index) => {
-                            return <OptionField value={row.id}>{row.name}</OptionField>;
+                            return (
+                              <OptionField value={row.id}>
+                                {row.name}
+                              </OptionField>
+                            );
                           })}
                         </select>
                       </div>
