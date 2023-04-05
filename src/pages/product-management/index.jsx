@@ -13,11 +13,10 @@ import { fetchSubcategory } from "../../states/slices/subcategorySlice";
 import ProductManagementModal from "../../components/product-management-modal";
 
 function ProductManagment() {
-
   const products = useSelector((store) => store.products);
   const productsCount = useSelector((store) => store.products.data.count);
-  const category = useSelector((store)=>store.category);
-  const subcategory = useSelector((store)=>store.subcategory);
+  const category = useSelector((store) => store.category);
+  const subcategory = useSelector((store) => store.subcategory);
 
   const dispatch = useDispatch();
 
@@ -30,21 +29,19 @@ function ProductManagment() {
     _limit: 5,
   });
 
-
   useEffect(() => {
     dispatch(fetchproducts(paginationParams));
     dispatch(fetchCategory());
     dispatch(fetchSubcategory());
   }, []);
 
-
   const searchHandler = (e) => {
     setSearchParams(e.target.value);
   };
 
-  const showModalHandler =()=>{
-    setShowModal(true)
-  }
+  const showModalHandler = () => {
+    setShowModal(true);
+  };
 
   return (
     <div className="flex">
@@ -63,7 +60,7 @@ function ProductManagment() {
             onclick={showModalHandler}
           >
             افزودن کالا
-          </Button >
+          </Button>
         </div>
         {products.status === "success" ? (
           <ProductsTable
@@ -82,7 +79,12 @@ function ProductManagment() {
           setActive={setActive}
           funName={fetchproducts}
         />
-        <ProductManagementModal showModal={showModal} setShowModal={setShowModal}/>
+        <ProductManagementModal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          categoryData={category.data.categoryData}
+          subcategoryData={subcategory.data.subcategoryData}
+        />
       </div>
     </div>
   );
