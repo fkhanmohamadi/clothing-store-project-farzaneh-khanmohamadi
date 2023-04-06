@@ -8,6 +8,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { uploadImage } from "../../api/services/uploadImage";
+import { useDispatch } from "react-redux";
+import { fetchproducts } from "../../states/slices/productsSlice";
 
 const schema = yup.object({
   thumbnail: yup.mixed().test(
@@ -45,6 +47,7 @@ export default function ProductManagementModal({
   categoryData,
   subcategoryData,
   brandsData,
+  paginationParams,
 }) {
   const {
     reset,
@@ -55,6 +58,8 @@ export default function ProductManagementModal({
     resolver: yupResolver(schema),
     mode: "onChange",
   });
+
+  const dispatch = useDispatch();
 
   const submitForm = async (data) => {
 
@@ -81,6 +86,7 @@ export default function ProductManagementModal({
     console.log(newProduct)
     try {
       const result = await addProductService(newProduct);
+      dispatch(fetchproducts(paginationParams))
       console.log(result);
     } catch (error) {
       console.log(error);

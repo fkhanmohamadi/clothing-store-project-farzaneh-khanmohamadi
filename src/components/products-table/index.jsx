@@ -1,6 +1,31 @@
 import React from "react";
+import { toast } from "react-toastify";
+import {deleteProductService} from "../../api/services/deleteProduct"
+import { useDispatch } from "react-redux";
+import { fetchproducts } from "../../states/slices/productsSlice";
 
-function ProductsTable({ tbodyData, categoryData, subcategoryData, showModal, setShowModal}) {
+function ProductsTable({ tbodyData, categoryData, subcategoryData, showModal, setShowModal, paginationParams}) {
+
+  const showToastMessage = () => {
+    toast.success('حذف با موفقیت انجام شد', {
+        position: toast.POSITION.TOP_RIGHT
+    });
+};  
+
+const dispatch = useDispatch();
+
+const deleteProductHandler = async (id)=>{
+  try {
+    const result = await deleteProductService(id);
+    showToastMessage()
+    dispatch(fetchproducts(paginationParams))
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+
+
   return (
     <div>
       <div className="flex flex-col">
@@ -83,6 +108,7 @@ function ProductsTable({ tbodyData, categoryData, subcategoryData, showModal, se
                           <a
                             className="text-pink-600 hover:text-pink-800"
                             href="#"
+                            onClick={() => deleteProductHandler(row.id)}
                           >
                             حذف
                           </a>

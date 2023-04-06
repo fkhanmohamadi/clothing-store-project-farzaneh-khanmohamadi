@@ -72,6 +72,7 @@ function ProductManagment() {
             subcategoryData={subcategory.data.subcategoryData}
             showModal={showModal}
             setShowModal={setShowModal}
+            paginationParams={paginationParams}
           />
         ) : (
           ""
@@ -90,6 +91,7 @@ function ProductManagment() {
           categoryData={category.data.categoryData}
           subcategoryData={subcategory.data.subcategoryData}
           brandsData={brands.data.brandsData}
+          paginationParams={paginationParams}
         />
       </div>
     </div>
