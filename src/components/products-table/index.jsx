@@ -1,6 +1,6 @@
 import React from "react";
 
-function ProductsTable({ tbodyData, categoryData, subcategoryData }) {
+function ProductsTable({ tbodyData, categoryData, subcategoryData, showModal, setShowModal}) {
   return (
     <div>
       <div className="flex flex-col">
@@ -74,6 +74,9 @@ function ProductsTable({ tbodyData, categoryData, subcategoryData }) {
                           <a
                             className="text-cyan-400 hover:text-cyan-700"
                             href="#"
+                            onClick={()=>{
+                              setShowModal(true)
+                            }}
                           >
                             ویرایش
                           </a>

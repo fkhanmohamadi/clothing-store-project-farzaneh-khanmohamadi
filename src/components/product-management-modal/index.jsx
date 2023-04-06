@@ -57,7 +57,6 @@ export default function ProductManagementModal({
   });
 
   const submitForm = async (data) => {
-    console.log(data.image);
 
     const thumbnail = await uploadHandler(data.thumbnail[0]);
 
@@ -69,15 +68,17 @@ export default function ProductManagementModal({
 
     const newProduct = {
       name: data.name,
-      brand: data.brand,
+      brand: Number(data.brand),
       image: image,
       thumbnail: thumbnail,
-      price: data.price,
-      quantity: data.quantity,
-      category: data.category,
-      subcategory: data.subcategory,
+      price: Number(data.price),
+      quantity: Number(data.quantity),
+      category: Number(data.category),
+      subcategory: Number(data.subcategory),
       description: "",
     };
+
+    console.log(newProduct)
     try {
       const result = await addProductService(newProduct);
       console.log(result);

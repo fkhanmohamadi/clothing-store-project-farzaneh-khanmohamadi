@@ -17,7 +17,8 @@ function HeaderManagment() {
  const navigate = useNavigate() 
 
 const handlelogout =()=>{
-  Cookies.remove('token')
+  localStorage.removeItem('token')
+  localStorage.removeItem('refresh_token')
   navigate('/login')
 }
 

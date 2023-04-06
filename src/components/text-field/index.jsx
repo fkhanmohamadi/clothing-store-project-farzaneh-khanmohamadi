@@ -19,7 +19,7 @@ function TextField({
         type={type}
         className={className}
         placeholder={placeholder}
-        validation = {validation}
+        {...validation}
       />
       <p>{error}</p>
     </div>
