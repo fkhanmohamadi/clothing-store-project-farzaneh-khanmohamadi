@@ -48,6 +48,7 @@ export default function ProductManagementModal({
   subcategoryData,
   brandsData,
   paginationParams,
+  id
 }) {
   const {
     reset,
@@ -82,8 +83,6 @@ export default function ProductManagementModal({
       subcategory: Number(data.subcategory),
       description: "",
     };
-
-    console.log(newProduct)
     try {
       const result = await addProductService(newProduct);
       dispatch(fetchproducts(paginationParams))
@@ -93,6 +92,23 @@ export default function ProductManagementModal({
     }
     setShowModal(false);
   };
+
+  const restUseformHandler = ()=>{
+    reset({
+      // name: data.name,
+      // brand: Number(data.brand),
+      // image: image,
+      // thumbnail: thumbnail,
+      // price: Number(data.price),
+      // quantity: Number(data.quantity),
+      // category: Number(data.category),
+      // subcategory: Number(data.subcategory),
+      // description: "",
+    }, {
+      keepErrors: true, 
+      keepDirty: true,
+    });
+  }
 
   return (
     <>
@@ -227,6 +243,7 @@ export default function ProductManagementModal({
                       <Button
                         type="submit"
                         className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        onclick={restUseformHandler}
                       >
                         ذخیره
                       </Button>

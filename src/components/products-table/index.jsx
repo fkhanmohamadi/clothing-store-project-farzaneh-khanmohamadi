@@ -1,30 +1,37 @@
 import React from "react";
 import { toast } from "react-toastify";
-import {deleteProductService} from "../../api/services/deleteProduct"
+import { deleteProductService } from "../../api/services/deleteProduct";
 import { useDispatch } from "react-redux";
 import { fetchproducts } from "../../states/slices/productsSlice";
 
-function ProductsTable({ tbodyData, categoryData, subcategoryData, showModal, setShowModal, paginationParams}) {
-
+function ProductsTable({
+  tbodyData,
+  categoryData,
+  subcategoryData,
+  setShowModal,
+  paginationParams,
+}) {
   const showToastMessage = () => {
-    toast.success('حذف با موفقیت انجام شد', {
-        position: toast.POSITION.TOP_RIGHT
+    toast.success("حذف با موفقیت انجام شد", {
+      position: toast.POSITION.TOP_RIGHT,
     });
-};  
+  };
 
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-const deleteProductHandler = async (id)=>{
-  try {
-    const result = await deleteProductService(id);
-    showToastMessage()
-    dispatch(fetchproducts(paginationParams))
-  } catch (error) {
-    console.log(error);
-  }
+  const editeProductHandler = (id) => {
+    setShowModal(true);
+  };
 
-}
-
+  const deleteProductHandler = async (id) => {
+    try {
+      const result = await deleteProductService(id);
+      showToastMessage();
+      dispatch(fetchproducts(paginationParams));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -99,8 +106,8 @@ const deleteProductHandler = async (id)=>{
                           <a
                             className="text-cyan-400 hover:text-cyan-700"
                             href="#"
-                            onClick={()=>{
-                              setShowModal(true)
+                            onClick={() => {
+                              editeProductHandler(row.id);
                             }}
                           >
                             ویرایش

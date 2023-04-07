@@ -70,7 +70,6 @@ function ProductManagment() {
             tbodyData={products.data.productsData}
             categoryData={category.data.categoryData}
             subcategoryData={subcategory.data.subcategoryData}
-            showModal={showModal}
             setShowModal={setShowModal}
             paginationParams={paginationParams}
           />
