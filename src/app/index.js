@@ -49,9 +49,8 @@ function App() {
         <Route path="/quantitymanagement" element={<QuantityManagment />} />
         <Route path="/productmanagementmodal" element={<ProductManagementModal/>}/>
         <Route path="/payment" element={<Payment/>}/>
-        {/* <Route path="/product" element={<Product/>}/>
         <Route path="/product" element={<Product/>}/>
-        <Route path="/products" element={<Products/>}/> */}
+        <Route path="/products" element={<Products/>}/>
         <Route path="/checkout" element={<Checkout/>}/>
         <Route path="/paymentresult" element={<PaymentResult/>}/>
         <Route path="/paymentresultsuccess" element={<PaymentResultSuccess/>}/>
