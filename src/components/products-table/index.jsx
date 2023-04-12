@@ -10,6 +10,9 @@ function ProductsTable({
   subcategoryData,
   setShowModal,
   paginationParams,
+  setEditedItem,
+  colorsData,
+  sizesData,
 }) {
   const showToastMessage = () => {
     toast.success("حذف با موفقیت انجام شد", {
@@ -19,7 +22,8 @@ function ProductsTable({
 
   const dispatch = useDispatch();
 
-  const editeProductHandler = (id) => {
+  const editeProductHandler = (item) => {
+    setEditedItem(item);
     setShowModal(true);
   };
 
@@ -64,6 +68,18 @@ function ProductsTable({
                       scope="col"
                       className="px-6 py-3 text-xs text-right font-bold text-left text-gray-500 uppercase "
                     >
+                      رنگ کالا
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs text-right font-bold text-left text-gray-500 uppercase "
+                    >
+                      سایز کالا
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs text-right font-bold text-left text-gray-500 uppercase "
+                    >
                       دسته بندی
                     </th>
                     <th
@@ -76,7 +92,7 @@ function ProductsTable({
                   {tbodyData.map((row, index) => {
                     return (
                       <tr key={index}>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap" >
                           {new Intl.NumberFormat("fa-IR").format(row.id)}
                         </td>
                         <td className="px-3 py-2 h-30 whitespace-nowrap">
@@ -88,6 +104,16 @@ function ProductsTable({
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                           {row.name}
+                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                          {colorsData.find(
+                              (item) => item.id === row.color
+                            ).fname}
+                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                          {sizesData.find(
+                              (item) => item.id === row.size
+                            ).name}
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                           {
@@ -107,7 +133,7 @@ function ProductsTable({
                             className="text-cyan-400 hover:text-cyan-700"
                             href="#"
                             onClick={() => {
-                              editeProductHandler(row.id);
+                              editeProductHandler(row);
                             }}
                           >
                             ویرایش

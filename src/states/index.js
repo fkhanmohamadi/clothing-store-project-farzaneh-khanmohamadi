@@ -4,6 +4,8 @@ import ordersSlice from "./slices/ordersSlice";
 import productsSlice from "./slices/productsSlice";
 import subcategorySlice from "./slices/subcategorySlice";
 import brandsSlice from "./slices/bransSlice"
+import colorsSlise from "./slices/colorsSlise";
+import sizesSlise from "./slices/sizesSlise";
 
 export const store = configureStore({
     reducer:{
@@ -12,5 +14,7 @@ export const store = configureStore({
         category:categorySlice,
         subcategory:subcategorySlice,
         brands:brandsSlice,
+        colors:colorsSlise,
+        sizes:sizesSlise,
     }
 })

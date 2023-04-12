@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../button";
 import TextField from "../text-field";
 import FileField from "../file-field";
@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { uploadImage } from "../../api/services/uploadImage";
 import { useDispatch } from "react-redux";
 import { fetchproducts } from "../../states/slices/productsSlice";
+import { editProductService } from "../../api/services/editProduct";
 
 const schema = yup.object({
   thumbnail: yup.mixed().test(
@@ -48,7 +49,8 @@ export default function ProductManagementModal({
   subcategoryData,
   brandsData,
   paginationParams,
-  id
+  setEditedItem,
+  editedItem,
 }) {
   const {
     reset,
@@ -60,16 +62,33 @@ export default function ProductManagementModal({
     mode: "onChange",
   });
 
+  useEffect(() => {
+    if (editedItem !== null) {
+      reset(editedItem);
+    }
+    else{
+      reset({})
+    }
+  }, [editedItem]);
+
   const dispatch = useDispatch();
 
   const submitForm = async (data) => {
-
-    const thumbnail = await uploadHandler(data.thumbnail[0]);
+    let thumbnail = await uploadHandler(data.thumbnail[0]);
 
     let image = [];
     for (let i = 0; i < data.image.length; i++) {
       const res = await uploadHandler(data.image[i]);
       image.push(res);
+    }
+
+    if(editedItem !== null){
+      if(!thumbnail){
+        thumbnail = data.thumbnail
+      }
+      if(!image[0]){
+        image = data.image
+      }
     }
 
     const newProduct = {
@@ -84,31 +103,34 @@ export default function ProductManagementModal({
       description: "",
     };
     try {
-      const result = await addProductService(newProduct);
-      dispatch(fetchproducts(paginationParams))
-      console.log(result);
+      if(editedItem !== null){
+        const result = await editProductService(editedItem.id,newProduct)
+      }else{
+        const result = await addProductService(newProduct);
+      }
+      dispatch(fetchproducts(paginationParams));
     } catch (error) {
       console.log(error);
     }
     setShowModal(false);
   };
 
-  const restUseformHandler = ()=>{
-    reset({
-      // name: data.name,
-      // brand: Number(data.brand),
-      // image: image,
-      // thumbnail: thumbnail,
-      // price: Number(data.price),
-      // quantity: Number(data.quantity),
-      // category: Number(data.category),
-      // subcategory: Number(data.subcategory),
-      // description: "",
-    }, {
-      keepErrors: true, 
-      keepDirty: true,
-    });
-  }
+  // const restUseformHandler = ()=>{
+  //   reset({
+  //     // name: data.name,
+  //     // brand: Number(data.brand),
+  //     // image: image,
+  //     // thumbnail: thumbnail,
+  //     // price: Number(data.price),
+  //     // quantity: Number(data.quantity),
+  //     // category: Number(data.category),
+  //     // subcategory: Number(data.subcategory),
+  //     // description: "",
+  //   }, {
+  //     keepErrors: true,
+  //     keepDirty: true,
+  //   });
+  // }
 
   return (
     <>
@@ -123,7 +145,10 @@ export default function ProductManagementModal({
                   <h3 className="text-l ">افزودن/ویرایش کالا</h3>
                   <Button
                     className="p-1 border-0 text-red-500 text-xl"
-                    onclick={() => setShowModal(false)}
+                    onclick={() => {
+                      setEditedItem(null);
+                      setShowModal(false);  
+                    }}
                   >
                     x
                   </Button>
@@ -243,7 +268,6 @@ export default function ProductManagementModal({
                       <Button
                         type="submit"
                         className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        onclick={restUseformHandler}
                       >
                         ذخیره
                       </Button>

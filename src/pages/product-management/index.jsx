@@ -11,6 +11,8 @@ import ProductsTable from "../../components/products-table";
 import { fetchCategory } from "../../states/slices/categorySlice";
 import { fetchSubcategory } from "../../states/slices/subcategorySlice";
 import { fetchBrands } from "../../states/slices/bransSlice";
+import { fetchColors } from "../../states/slices/colorsSlise";
+import { fetchSizes } from "../../states/slices/sizesSlise";
 import ProductManagementModal from "../../components/product-management-modal";
 
 function ProductManagment() {
@@ -19,6 +21,8 @@ function ProductManagment() {
   const category = useSelector((store) => store.category);
   const subcategory = useSelector((store) => store.subcategory);
   const brands = useSelector((store) => store.brands);
+  const colors = useSelector((store) => store.colors);
+  const sizes = useSelector((store) => store.sizes);
 
   const dispatch = useDispatch();
 
@@ -36,6 +40,8 @@ function ProductManagment() {
     dispatch(fetchCategory());
     dispatch(fetchSubcategory());
     dispatch(fetchBrands());
+    dispatch(fetchColors());
+    dispatch(fetchSizes());
   }, []);
 
   const searchHandler = (e) => {
@@ -45,6 +51,8 @@ function ProductManagment() {
   const showModalHandler = () => {
     setShowModal(true);
   };
+
+  const [editedItem, setEditedItem] = useState(null);
 
   return (
     <div className="flex">
@@ -70,8 +78,11 @@ function ProductManagment() {
             tbodyData={products.data.productsData}
             categoryData={category.data.categoryData}
             subcategoryData={subcategory.data.subcategoryData}
+            colorsData={colors.data.colorsData}
+            sizesData={sizes.data.sizesData}
             setShowModal={setShowModal}
             paginationParams={paginationParams}
+            setEditedItem ={setEditedItem}
           />
         ) : (
           ""
@@ -91,6 +102,8 @@ function ProductManagment() {
           subcategoryData={subcategory.data.subcategoryData}
           brandsData={brands.data.brandsData}
           paginationParams={paginationParams}
+          editedItem = {editedItem}
+          setEditedItem = {setEditedItem}
         />
       </div>
     </div>
