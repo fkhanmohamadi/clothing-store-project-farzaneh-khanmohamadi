@@ -101,6 +101,8 @@ function ProductManagment() {
           categoryData={category.data.categoryData}
           subcategoryData={subcategory.data.subcategoryData}
           brandsData={brands.data.brandsData}
+          colorsData={colors.data.colorsData}
+          sizesData={sizes.data.sizesData}
           paginationParams={paginationParams}
           editedItem = {editedItem}
           setEditedItem = {setEditedItem}

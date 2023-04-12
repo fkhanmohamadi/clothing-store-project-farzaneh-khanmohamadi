@@ -31,8 +31,11 @@ const schema = yup.object({
   price: yup.string().required("قیمت محصول الزامیست ."),
   quantity: yup.string().required("تعداد محصول الزامیست ."),
   brand: yup.string().required(" برند محصول الزامیست ."),
+  color: yup.string().required(" رنگ محصول الزامیست ."),
+  size: yup.string().required(" سایز محصول الزامیست ."),
   category: yup.string().required(" دسته بندی محصول الزامیست ."),
   subcategory: yup.string().required(" زیر دسته بندی محصول الزامیست ."),
+  code: yup.string().required("کد محصول الزامیست ."),
 });
 
 const uploadHandler = async (img) => {
@@ -48,6 +51,8 @@ export default function ProductManagementModal({
   categoryData,
   subcategoryData,
   brandsData,
+  colorsData,
+  sizesData,
   paginationParams,
   setEditedItem,
   editedItem,
@@ -74,6 +79,8 @@ export default function ProductManagementModal({
   const dispatch = useDispatch();
 
   const submitForm = async (data) => {
+
+    console.log(data)
     let thumbnail = await uploadHandler(data.thumbnail[0]);
 
     let image = [];
@@ -93,11 +100,14 @@ export default function ProductManagementModal({
 
     const newProduct = {
       name: data.name,
-      brand: Number(data.brand),
+      code: data.code,
       image: image,
       thumbnail: thumbnail,
       price: Number(data.price),
       quantity: Number(data.quantity),
+      color:Number(data.color),
+      size:Number(data.size),
+      brand: Number(data.brand),
       category: Number(data.category),
       subcategory: Number(data.subcategory),
       description: "",
@@ -114,23 +124,6 @@ export default function ProductManagementModal({
     }
     setShowModal(false);
   };
-
-  // const restUseformHandler = ()=>{
-  //   reset({
-  //     // name: data.name,
-  //     // brand: Number(data.brand),
-  //     // image: image,
-  //     // thumbnail: thumbnail,
-  //     // price: Number(data.price),
-  //     // quantity: Number(data.quantity),
-  //     // category: Number(data.category),
-  //     // subcategory: Number(data.subcategory),
-  //     // description: "",
-  //   }, {
-  //     keepErrors: true,
-  //     keepDirty: true,
-  //   });
-  // }
 
   return (
     <>
@@ -159,6 +152,20 @@ export default function ProductManagementModal({
                     className=" mt-2 space-y-6 flex flex-col text-sm"
                     onSubmit={handleSubmit(submitForm)}
                   >
+                    <div className="flex gap-5">
+                      <div className="basis-1/5"> 
+                      <TextField
+                      id="code"
+                      lable="کد کالا"
+                      name="code"
+                      type="text"
+                      className="rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      placeholder=""
+                      error={errors.code?.message}
+                      validation={{ ...register("code") }}
+                    />
+                      </div>
+                    <div className="basis-4/5">
                     <TextField
                       id="name"
                       lable="نام کالا"
@@ -169,6 +176,11 @@ export default function ProductManagementModal({
                       error={errors.name?.message}
                       validation={{ ...register("name") }}
                     />
+                    </div>
+
+                    
+                    </div>
+                    
                     <div className="flex justify-between">
                       <FileField
                         id="thumbnail"
@@ -207,6 +219,42 @@ export default function ProductManagementModal({
                         error={errors.quantity?.message}
                         validation={{ ...register("quantity") }}
                       />
+                      <div className="flex flex-col">
+                        <label htmlFor="color">رنگ کالا</label>
+                        <select
+                          id="color"
+                          name="color"
+                          {...register("color")}
+                          className="rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        >
+                          {colorsData.map((row, index) => {
+                            return (
+                              <OptionField value={row.id}>
+                                {row.fname}
+                              </OptionField>
+                            );
+                          })}
+                        </select>
+                        <p>{errors.color?.message}</p>
+                      </div>
+                      <div className="flex flex-col">
+                        <label htmlFor="size">سایز کالا</label>
+                        <select
+                          id="size"
+                          name="size"
+                          {...register("size")}
+                          className="rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        >
+                          {sizesData.map((row, index) => {
+                            return (
+                              <OptionField value={row.id}>
+                                {row.name}
+                              </OptionField>
+                            );
+                          })}
+                        </select>
+                        <p>{errors.size?.message}</p>
+                      </div>
                     </div>
                     <div className="flex justify-between">
                       <div className="flex flex-col">
