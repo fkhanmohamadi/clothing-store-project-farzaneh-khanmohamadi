@@ -11,6 +11,8 @@ import { uploadImage } from "../../api/services/uploadImage";
 import { useDispatch } from "react-redux";
 import { fetchproducts } from "../../states/slices/productsSlice";
 import { editProductService } from "../../api/services/editProduct";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const schema = yup.object({
   thumbnail: yup.mixed().test(
@@ -36,6 +38,7 @@ const schema = yup.object({
   category: yup.string().required(" دسته بندی محصول الزامیست ."),
   subcategory: yup.string().required(" زیر دسته بندی محصول الزامیست ."),
   code: yup.string().required("کد محصول الزامیست ."),
+  // description: yup.string().required("توضیحات محصول الزامیست ."),
 });
 
 const uploadHandler = async (img) => {
@@ -70,17 +73,15 @@ export default function ProductManagementModal({
   useEffect(() => {
     if (editedItem !== null) {
       reset(editedItem);
-    }
-    else{
-      reset({})
+    } else {
+      reset({});
     }
   }, [editedItem]);
 
   const dispatch = useDispatch();
 
   const submitForm = async (data) => {
-
-    console.log(data)
+    console.log(data);
     let thumbnail = await uploadHandler(data.thumbnail[0]);
 
     let image = [];
@@ -89,12 +90,12 @@ export default function ProductManagementModal({
       image.push(res);
     }
 
-    if(editedItem !== null){
-      if(!thumbnail){
-        thumbnail = data.thumbnail
+    if (editedItem !== null) {
+      if (!thumbnail) {
+        thumbnail = data.thumbnail;
       }
-      if(!image[0]){
-        image = data.image
+      if (!image[0]) {
+        image = data.image;
       }
     }
 
@@ -105,17 +106,17 @@ export default function ProductManagementModal({
       thumbnail: thumbnail,
       price: Number(data.price),
       quantity: Number(data.quantity),
-      color:Number(data.color),
-      size:Number(data.size),
+      color: Number(data.color),
+      size: Number(data.size),
       brand: Number(data.brand),
       category: Number(data.category),
       subcategory: Number(data.subcategory),
       description: "",
     };
     try {
-      if(editedItem !== null){
-        const result = await editProductService(editedItem.id,newProduct)
-      }else{
+      if (editedItem !== null) {
+        const result = await editProductService(editedItem.id, newProduct);
+      } else {
         const result = await addProductService(newProduct);
       }
       dispatch(fetchproducts(paginationParams));
@@ -140,7 +141,7 @@ export default function ProductManagementModal({
                     className="p-1 border-0 text-red-500 text-xl"
                     onclick={() => {
                       setEditedItem(null);
-                      setShowModal(false);  
+                      setShowModal(false);
                     }}
                   >
                     x
@@ -149,38 +150,36 @@ export default function ProductManagementModal({
                 {/*body*/}
                 <div className="relative px-6 py-4 flex-auto">
                   <form
-                    className=" mt-2 space-y-6 flex flex-col text-sm"
+                    className=" mt-2 space-y-2 flex flex-col text-sm"
                     onSubmit={handleSubmit(submitForm)}
                   >
                     <div className="flex gap-5">
-                      <div className="basis-1/5"> 
-                      <TextField
-                      id="code"
-                      lable="کد کالا"
-                      name="code"
-                      type="text"
-                      className="rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      placeholder=""
-                      error={errors.code?.message}
-                      validation={{ ...register("code") }}
-                    />
+                      <div className="basis-1/5">
+                        <TextField
+                          id="code"
+                          lable="کد کالا"
+                          name="code"
+                          type="text"
+                          className="rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          placeholder=""
+                          error={errors.code?.message}
+                          validation={{ ...register("code") }}
+                        />
                       </div>
-                    <div className="basis-4/5">
-                    <TextField
-                      id="name"
-                      lable="نام کالا"
-                      name="name"
-                      type="text"
-                      className="rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      placeholder=""
-                      error={errors.name?.message}
-                      validation={{ ...register("name") }}
-                    />
+                      <div className="basis-4/5">
+                        <TextField
+                          id="name"
+                          lable="نام کالا"
+                          name="name"
+                          type="text"
+                          className="rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          placeholder=""
+                          error={errors.name?.message}
+                          validation={{ ...register("name") }}
+                        />
+                      </div>
                     </div>
 
-                    
-                    </div>
-                    
                     <div className="flex justify-between">
                       <FileField
                         id="thumbnail"
@@ -312,6 +311,18 @@ export default function ProductManagementModal({
                         <p>{errors.subcategory?.message}</p>
                       </div>
                     </div>
+                      <CKEditor
+                        id="description"
+                        name="description"
+                        editor={ClassicEditor}
+                        // data={row.description}
+                        // onReady={(editor) => {
+                        //   // You can store the "editor" and use when it is needed.
+                        //   console.log("Editor is ready to use!", editor);
+                        // }}
+                        // {...register("description")}
+                      />
+                      {/* <p>{errors.description?.message}</p> */}
                     <div>
                       <Button
                         type="submit"
