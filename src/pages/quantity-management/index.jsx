@@ -8,9 +8,9 @@ import HeaderManagment from "../../layout/header-managment";
 import Statistics from "../../layout/Statistics";
 import { fetchproducts } from "../../states/slices/productsSlice";
 import QuantityTable from "../../components/quantity-table";
+import { editQuantityService } from "../../api/services/editQuantity";
 
 function QuantityManagment() {
-
   const products = useSelector((store) => store.products);
   const productsCount = useSelector((store) => store.products.data.count);
 
@@ -25,12 +25,8 @@ function QuantityManagment() {
 
   const [searchParams, setSearchParams] = useState("");
 
-  const [editProductArr, setEditProductArr] = useState([
-    {
-      id: 0,
-      item: "",
-    },
-  ]);
+  const [editPriceArr, setEditPriceArr] = useState([]);
+  const [editQuntityArr, setEditQuantityArr] = useState([]);
 
   useEffect(() => {
     dispatch(fetchproducts(paginationParams));
@@ -40,9 +36,21 @@ function QuantityManagment() {
     setSearchParams(e.target.value);
   };
 
-  const submitHandler = () =>{
-    
-  }
+  const submitHandler = async () => {
+    Promise.all(
+      editPriceArr.map(async (item) => {
+        const result = await editQuantityService(item.id,{price:item.item});
+        // console.log(result);
+      })
+    )
+    Promise.all(
+      editQuntityArr.map(async (item) => {
+        const result = await editQuantityService(item.id,{quantity:item.item});
+        // console.log(result);
+      })
+    )
+    dispatch(fetchproducts(paginationParams));
+  };
 
   return (
     <div className="flex">
@@ -66,8 +74,10 @@ function QuantityManagment() {
         {products.status === "success" ? (
           <QuantityTable
             tbodyData={products.data.productsData}
-            editProductArr = {editProductArr}
-            setEditProductArr = {setEditProductArr}
+            editPriceArr={editPriceArr}
+            setEditPriceArr={setEditPriceArr}
+            editQuntityArr={editQuntityArr}
+            setEditQuantityArr={setEditQuantityArr}
           />
         ) : (
           ""

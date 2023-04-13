@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import QuantityTableTD from "../quantity-table-td";
 
-function QuantityTable({ tbodyData, editProductArr, setEditProductArr }) {
+function QuantityTable({ tbodyData, editPriceArr, setEditPriceArr, editQuntityArr, setEditQuantityArr }) {
 
   return (
     <div>
@@ -52,30 +52,21 @@ function QuantityTable({ tbodyData, editProductArr, setEditProductArr }) {
                           key={row.id}
                           id={row.id}
                           value={row.price}
-                          editProductArr={editProductArr}
-                          setEditProductArr={setEditProductArr}
-                        />
-                        {/* <td
-                          className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap"
-                          onClick={() => {
-                            
-                          }}
-                        ><div>
-                                {new Intl.NumberFormat("fa-IR", {
-                                  style: "currency",
-                                  currency: "IRR",
-                                }).format(row.price)}
-                              </div>
-                          
-                        </td> */}
-                        <td
-                          className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap"
-                          onClick={() => {
-                            console.log("123");
-                          }}
+                          setEditProdect={setEditPriceArr}
                         >
-                          {new Intl.NumberFormat("fa-IR").format(row.quantity)}
-                        </td>
+                        {new Intl.NumberFormat("fa-IR", {
+                              style: "currency",
+                              currency: "IRR",
+                            }).format(row.price)}
+                        </QuantityTableTD>
+                        <QuantityTableTD
+                          key={row.id*1000}
+                          id={row.id}
+                          value={row.quantity}
+                          setEditProdect={setEditQuantityArr}
+                        >
+                        {new Intl.NumberFormat("fa-IR").format(row.quantity)}
+                        </QuantityTableTD>
                       </tr>
                     );
                   })}
