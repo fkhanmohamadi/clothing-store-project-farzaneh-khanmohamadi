@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import QuantityTableTD from "../quantity-table-td";
 
-function QuantityTable({ tbodyData, categoryData, subcategoryData }) {
+function QuantityTable({ tbodyData, editProductArr, setEditProductArr }) {
+
   return (
     <div>
       <div className="flex flex-col">
@@ -46,13 +48,32 @@ function QuantityTable({ tbodyData, categoryData, subcategoryData }) {
                         <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                           {row.name}
                         </td>
-                        <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                          {new Intl.NumberFormat("fa-IR", {
-                            style: "currency",
-                            currency: "IRR",
-                          }).format(row.price)}
-                        </td>
-                        <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                        <QuantityTableTD
+                          key={row.id}
+                          id={row.id}
+                          value={row.price}
+                          editProductArr={editProductArr}
+                          setEditProductArr={setEditProductArr}
+                        />
+                        {/* <td
+                          className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap"
+                          onClick={() => {
+                            
+                          }}
+                        ><div>
+                                {new Intl.NumberFormat("fa-IR", {
+                                  style: "currency",
+                                  currency: "IRR",
+                                }).format(row.price)}
+                              </div>
+                          
+                        </td> */}
+                        <td
+                          className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap"
+                          onClick={() => {
+                            console.log("123");
+                          }}
+                        >
                           {new Intl.NumberFormat("fa-IR").format(row.quantity)}
                         </td>
                       </tr>

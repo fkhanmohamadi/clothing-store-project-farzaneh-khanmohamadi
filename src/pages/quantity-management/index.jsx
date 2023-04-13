@@ -10,8 +10,10 @@ import { fetchproducts } from "../../states/slices/productsSlice";
 import QuantityTable from "../../components/quantity-table";
 
 function QuantityManagment() {
+
   const products = useSelector((store) => store.products);
   const productsCount = useSelector((store) => store.products.data.count);
+
   const dispatch = useDispatch();
 
   const [active, setActive] = useState("1");
@@ -23,6 +25,13 @@ function QuantityManagment() {
 
   const [searchParams, setSearchParams] = useState("");
 
+  const [editProductArr, setEditProductArr] = useState([
+    {
+      id: 0,
+      item: "",
+    },
+  ]);
+
   useEffect(() => {
     dispatch(fetchproducts(paginationParams));
   }, []);
@@ -30,6 +39,10 @@ function QuantityManagment() {
   const searchHandler = (e) => {
     setSearchParams(e.target.value);
   };
+
+  const submitHandler = () =>{
+    
+  }
 
   return (
     <div className="flex">
@@ -45,6 +58,7 @@ function QuantityManagment() {
           <Button
             type="submit"
             className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onclick={submitHandler}
           >
             ذخیره
           </Button>
@@ -52,6 +66,8 @@ function QuantityManagment() {
         {products.status === "success" ? (
           <QuantityTable
             tbodyData={products.data.productsData}
+            editProductArr = {editProductArr}
+            setEditProductArr = {setEditProductArr}
           />
         ) : (
           ""
