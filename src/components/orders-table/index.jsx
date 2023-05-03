@@ -1,10 +1,16 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import React from "react";
-import Button from "../button"
+import Button from "../button";
+import { useDispatch } from "react-redux";
 
-function OrdersTable({ tbodyData, onclick }) {
+function OrdersTable({ tbodyData, onclick, setShowModal, setEditedItem }) {
 
+  const dispatch = useDispatch();
 
+  const editeOrderHandler = (item) => {
+    setEditedItem(item);
+    setShowModal(true);
+  };
 
   return (
     <div>
@@ -39,7 +45,7 @@ function OrdersTable({ tbodyData, onclick }) {
                     >
                       زمان ثبت سفارش
                       <Button onclick={onclick}>
-                      <ChevronDownIcon className="h-4 w-4 text-black-500"/>
+                        <ChevronDownIcon className="h-4 w-4 text-black-500" />
                       </Button>
                     </th>
                     <th
@@ -75,6 +81,9 @@ function OrdersTable({ tbodyData, onclick }) {
                           <a
                             className="text-cyan-400 hover:text-cyan-700"
                             href="#"
+                            onClick={() => {
+                              editeOrderHandler(row);
+                            }}
                           >
                             ویرایش سفارش
                           </a>

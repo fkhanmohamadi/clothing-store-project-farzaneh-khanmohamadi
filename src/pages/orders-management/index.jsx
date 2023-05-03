@@ -8,6 +8,7 @@ import SearchField from "../../components/search-field";
 import HeaderManagment from "../../layout/header-managment";
 import Statistics from "../../layout/Statistics";
 import { fetchOrders } from "../../states/slices/ordersSlice";
+import OrderManagementModal from "../../components/order-mangement-modal";
 
 function OrdersManagment() {
   const orders = useSelector((store) => store.orders);
@@ -17,6 +18,8 @@ function OrdersManagment() {
 
   const [active, setActive] = useState("1");
   const [delivered, setDelivered] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [editedItem, setEditedItem] = useState(null);
 
   const [paginationParams, setPaginationParams] = useSearchParams({
     _page: 1,
@@ -69,6 +72,10 @@ function OrdersManagment() {
     dispatch(fetchOrders(paginationParams));
   };
 
+  const showModalHandler = () => {
+    setShowModal(true);
+  };
+
   return (
     <div className="flex">
       <HeaderManagment />
@@ -86,6 +93,8 @@ function OrdersManagment() {
           <OrdersTable
             tbodyData={orders.data.ordersData}
             onclick={HandelSort}
+            setShowModal={setShowModal}
+            setEditedItem ={setEditedItem}
           />
         ) : (
           ""
@@ -98,6 +107,13 @@ function OrdersManagment() {
           setActive={setActive}
           funName={fetchOrders}
           
+        />
+          <OrderManagementModal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          editedItem = {editedItem}
+          setEditedItem = {setEditedItem}
+          paginationParams={paginationParams}
         />
       </div>
     </div>

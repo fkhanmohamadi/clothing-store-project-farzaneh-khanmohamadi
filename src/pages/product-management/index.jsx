@@ -29,6 +29,7 @@ function ProductManagment() {
   const [active, setActive] = useState("1");
   const [searchParams, setSearchParams] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [editedItem, setEditedItem] = useState(null);
 
   const [paginationParams, setPaginationParams] = useSearchParams({
     _page: 1,
@@ -52,7 +53,6 @@ function ProductManagment() {
     setShowModal(true);
   };
 
-  const [editedItem, setEditedItem] = useState(null);
 
   return (
     <div className="flex">
