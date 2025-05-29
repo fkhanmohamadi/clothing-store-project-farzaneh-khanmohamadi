@@ -9,7 +9,6 @@ function Pagination({
   count,
   active,
   setActive,
-  funName,
 }) {
   const dispatch = useDispatch();
 
@@ -21,18 +20,17 @@ function Pagination({
 
     setActive(pageNum);
 
-    console.log("pageNum:",pageNum);
-    console.log("_limit:",paginationParams.get("_limit"));
-    console.log("delivered:",paginationParams.get("delivered"));
-    console.log("_sort",paginationParams.get("_sort"));
-    console.log("_order",paginationParams.get("_order"));
-
+    // console.log("pageNum:", pageNum);
+    // console.log("_limit:", paginationParams.get("_limit"));
+    // console.log("delivered:", paginationParams.get("delivered"));
+    // console.log("_sort", paginationParams.get("_sort"));
+    // console.log("_order", paginationParams.get("_order"));
 
     if (
       paginationParams.get("delivered") &&
       paginationParams.get("_sort") &&
       paginationParams.get("_order")
-    )
+    ) {
       setPaginationParams({
         _page: pageNum,
         _limit: paginationParams.get("_limit"),
@@ -40,29 +38,30 @@ function Pagination({
         sort: paginationParams.get("_sort"),
         order: paginationParams.get("_order"),
       });
-    else if (
+      dispatch(fetchOrders(paginationParams));
+    } else if (
       paginationParams.get("delivered") &&
       !paginationParams.get("_sort") &&
       !paginationParams.get("_order")
-    )
+    ) {
       setPaginationParams({
         _page: pageNum,
         _limit: paginationParams.get("_limit"),
         delivered: paginationParams.get("delivered"),
       });
-      else if(
-        !paginationParams.get("delivered") &&
-        !paginationParams.get("_sort") &&
-        !paginationParams.get("_order")
-      )
+      console.log(...paginationParams)
+      dispatch(fetchOrders(paginationParams));
+    } else if (
+      !paginationParams.get("delivered") &&
+      !paginationParams.get("_sort") &&
+      !paginationParams.get("_order")
+    ) {
       setPaginationParams({
-          _page: pageNum,
-          _limit: paginationParams.get("_limit"),
-        })
-
-
-
-    dispatch(funName(paginationParams));
+        _page: pageNum,
+        _limit: paginationParams.get("_limit"),
+      });
+      dispatch(fetchproducts(paginationParams));
+    }
   };
 
   useEffect(() => {

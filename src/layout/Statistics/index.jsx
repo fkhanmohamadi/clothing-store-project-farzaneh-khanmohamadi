@@ -1,7 +1,6 @@
 import { RectangleGroupIcon, ShoppingBagIcon, UsersIcon } from "@heroicons/react/24/outline";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import React from "react";
+import {  useSelector } from "react-redux";
 import StatisticsList from "../../components/statistics-list";
 
 function Statistics() {
@@ -21,6 +20,7 @@ function Statistics() {
         </StatisticsList>
         <StatisticsList title="تعداد سفارشات" count={ordersCount}>
           <ShoppingBagIcon className="w-5 h-5 text-cyan-400" />
+          {/* style={"backgroundColor"="black"} */}
         </StatisticsList>
       </div>
     </div>

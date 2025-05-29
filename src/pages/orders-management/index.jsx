@@ -105,7 +105,6 @@ function OrdersManagment() {
           count={ordersCount}
           active={active}
           setActive={setActive}
-          funName={fetchOrders}
           
         />
           <OrderManagementModal

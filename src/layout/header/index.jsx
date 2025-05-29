@@ -11,9 +11,7 @@ import {
   GiftTopIcon,
   Squares2X2Icon,
 } from "@heroicons/react/24/outline";
-import {
-  ChevronDownIcon,
-} from "@heroicons/react/20/solid";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 
 const feminine = [
@@ -210,7 +208,7 @@ function Headre() {
       <div className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
         <div className="hidden lg:flex lg:flex-1 lg:justify-start gap-5">
           <Link
-            to = "/login"
+            to="/login"
             className="flex items-center text-sm font-semibold leading-6 text-gray-900"
           >
             <span aria-hidden="true">
@@ -737,7 +735,16 @@ function Headre() {
                         />
                       </Disclosure.Button>
                       <Disclosure.Panel className="mt-2 space-y-2">
-                        {[...feminine, ...masculine, ...teenager, ...childish, ...sport, ...brands, ...mifa, ...callsToAction].map((item) => (
+                        {[
+                          ...feminine,
+                          ...masculine,
+                          ...teenager,
+                          ...childish,
+                          ...sport,
+                          ...brands,
+                          ...mifa,
+                          ...callsToAction,
+                        ].map((item) => (
                           <Disclosure.Button
                             key={item.name}
                             as="a"

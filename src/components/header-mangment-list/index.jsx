@@ -1,16 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function HeaderManagmentList({ href, title, onclick, children }) {
   return (
     <li>
-      <a
-        href={href}
+      <Link
+        to={href}
         onClick={onclick}
         className="flex gap-2"
       >
         {children}
         <span className="text-gray-600">{title}</span>
-      </a>
+      </Link>
     </li>
   );
 }

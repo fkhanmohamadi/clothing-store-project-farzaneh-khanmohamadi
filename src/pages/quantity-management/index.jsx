@@ -88,7 +88,6 @@ function QuantityManagment() {
           count={productsCount}
           active={active}
           setActive={setActive}
-          funName={fetchproducts}
         />
       </div>
     </div>

@@ -7,18 +7,18 @@ import {
   RectangleGroupIcon,
   TruckIcon,
   UsersIcon,
+  HomeIcon
 } from "@heroicons/react/24/outline";
 import HeaderManagmentList from "../../components/header-mangment-list";
-import Cookies from "js-cookie";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 function HeaderManagment() {
 
  const navigate = useNavigate() 
 
 const handlelogout =()=>{
-  localStorage.removeItem('token')
-  localStorage.removeItem('refresh_token')
+  localStorage.removeItem('token');
+  localStorage.removeItem('refresh_token');
   navigate('/login')
 }
 
@@ -37,6 +37,9 @@ const handlelogout =()=>{
           </div>
           <div className="flex-1">
             <ul className="flex flex-col gap-5 py-4 text-sm border-b border-gray-200">
+              <HeaderManagmentList href="/homemanagment" title="خانه">
+                <HomeIcon className="h-5 w-5 text-pink-600" />
+              </HeaderManagmentList>
               <HeaderManagmentList href="/ordersmanagment" title="مدیریت سفارش ها">
                 <TruckIcon className="h-5 w-5 text-pink-600" />
               </HeaderManagmentList>

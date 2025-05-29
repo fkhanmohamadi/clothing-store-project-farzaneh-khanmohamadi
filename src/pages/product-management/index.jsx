@@ -16,6 +16,8 @@ import { fetchSizes } from "../../states/slices/sizesSlise";
 import ProductManagementModal from "../../components/product-management-modal";
 
 function ProductManagment() {
+
+  //Store
   const products = useSelector((store) => store.products);
   const productsCount = useSelector((store) => store.products.data.count);
   const category = useSelector((store) => store.category);
@@ -24,12 +26,14 @@ function ProductManagment() {
   const colors = useSelector((store) => store.colors);
   const sizes = useSelector((store) => store.sizes);
 
-  const dispatch = useDispatch();
-
+  //state
   const [active, setActive] = useState("1");
   const [searchParams, setSearchParams] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [editedItem, setEditedItem] = useState(null);
+  
+  //dispatch
+  const dispatch = useDispatch();
 
   const [paginationParams, setPaginationParams] = useSearchParams({
     _page: 1,
@@ -45,6 +49,7 @@ function ProductManagment() {
     dispatch(fetchSizes());
   }, []);
 
+  //Handler
   const searchHandler = (e) => {
     setSearchParams(e.target.value);
   };
@@ -93,7 +98,6 @@ function ProductManagment() {
           count={productsCount}
           active={active}
           setActive={setActive}
-          funName={fetchproducts}
         />
         <ProductManagementModal
           showModal={showModal}

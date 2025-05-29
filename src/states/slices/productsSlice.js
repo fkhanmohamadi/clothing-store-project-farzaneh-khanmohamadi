@@ -27,3 +27,28 @@ const productsSlice = createSlice({
 })
 
 export default productsSlice.reducer
+
+// const productsSlice = createSlice({
+//   name: 'products/list',
+//   initialState: {
+//     list: [],
+//     loading: false,
+//     error: null,
+//   },
+//   reducers: {},
+//   extraReducers: (builder) => {
+//     builder
+//       .addCase(fetchproducts.pending, (state) => {
+//         state.loading = true;
+//         state.error = null;
+//       })
+//       .addCase(fetchproducts.fulfilled, (state, action) => {
+//         state.loading = false;
+//         state.list = action.payload;
+//       })
+//       .addCase(fetchproducts.rejected, (state, action) => {
+//         state.loading = false;
+//         state.error = action.error?.message || 'خطا در دریافت محصولات';
+//       });
+//   },
+// });
